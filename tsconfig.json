@@ -3,8 +3,18 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
-    }
+      "src/*": ["src/*"],
+      "components/*": ["src/components/*"],
+      "modules/*": ["src/modules/*"],
+      "utils/*": ["src/utils/*"],
+      "stores/*": ["src/stores/*"],
+      "routers/*": ["src/routers/*"],
+      "assets/*": ["src/assets/*"],
+      "constants/*": ["src/constants/*"],
+      "types*": ["src/types/*"],
+    },
+    "resolveJsonModule": true,
+    "moduleResolution": "node"
   },
   "include": ["src"]
 }
