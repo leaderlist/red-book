@@ -1,4 +1,4 @@
-type RequestMethods = "GET" | "POST" | "PUT" | "DELETE";
+type RequestMethods = 'GET' | 'POST' | 'PUT' | 'DELETE';
 // fetch.interceptors.request.use(function (config) {
 // return {...config, customConfig};
 // })
@@ -14,27 +14,19 @@ interface RequestConfig extends RequestInit {
   baseUrl?: string;
 }
 
-interface FetchConfig extends Omit<RequestConfig, "url" | "method" | "body"> {}
+interface FetchConfig extends Omit<RequestConfig, 'url' | 'method' | 'body'> {}
 
-type RequestResolveCallback = (
-  config: RequestConfig
-) => RequestConfig | Promise<RequestConfig>;
+type RequestResolveCallback = (config: RequestConfig) => RequestConfig | Promise<RequestConfig>;
 type RequestRejectCallback = (config: RequestConfig) => Error;
 type ResponseResolveCallback = (response: Response) => Response;
 type ResponseRejectCallback = (response: Error) => Error;
 
 interface RequestInterceptor {
-  use: (
-    resolveCallback: RequestResolveCallback,
-    rejectCallback?: RequestRejectCallback
-  ) => void;
+  use: (resolveCallback: RequestResolveCallback, rejectCallback?: RequestRejectCallback) => void;
 }
 
 interface ResponseInterceptor {
-  use: (
-    resolveCallback: ResponseResolveCallback,
-    rejectCallback?: ResponseRejectCallback
-  ) => void;
+  use: (resolveCallback: ResponseResolveCallback, rejectCallback?: ResponseRejectCallback) => void;
 }
 
 interface Interceptors {
@@ -74,12 +66,7 @@ export default class MyFetch {
     };
   }
 
-  async fetch(
-    url: string,
-    method: RequestMethods,
-    data?: BodyInit_ | null,
-    options?: FetchConfig
-  ) {
+  async fetch(url: string, method: RequestMethods, data?: BodyInit_ | null, options?: FetchConfig) {
     const config = this.requestResolveInterceptors.reduce((prev, current) => {
       console.log(prev, current(this.config));
       return { ...prev, ...current(this.config) };
@@ -106,37 +93,31 @@ export default class MyFetch {
         return res.json();
       });
 
-      return this.responseResolveInterceptors.reduce(
-        (prevResponse, currentCallback) => {
-          return currentCallback(prevResponse);
-        },
-        response
-      );
+      return this.responseResolveInterceptors.reduce((prevResponse, currentCallback) => {
+        return currentCallback(prevResponse);
+      }, response);
     } catch (error) {
-      return this.responseRejectInterceptors.reduce(
-        (prevResponse, currentCallback) => {
-          return currentCallback(prevResponse);
-        },
-        error as Error
-      );
+      return this.responseRejectInterceptors.reduce((prevResponse, currentCallback) => {
+        return currentCallback(prevResponse);
+      }, error as Error);
     }
   }
 
   // data改为query,类型为键值对
   get(url: string, data?: BodyInit_ | null, options?: FetchConfig) {
-    return this.fetch(url, "GET", data, options);
+    return this.fetch(url, 'GET', data, options);
   }
 
   // 参数改为params,类型为any
   post(url: string, data?: BodyInit_ | null, options?: FetchConfig) {
-    return this.fetch(url, "POST", data, options);
+    return this.fetch(url, 'POST', data, options);
   }
 
   put(url: string, data?: BodyInit_ | null, options?: FetchConfig) {
-    return this.fetch(url, "PUT", data, options);
+    return this.fetch(url, 'PUT', data, options);
   }
 
   delete(url: string, data?: BodyInit_ | null, options?: FetchConfig) {
-    return this.fetch(url, "DELETE", data, options);
+    return this.fetch(url, 'DELETE', data, options);
   }
 }
