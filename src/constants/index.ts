@@ -1,0 +1,1 @@
+export const DEFAULT_TEXT = "Hello World";

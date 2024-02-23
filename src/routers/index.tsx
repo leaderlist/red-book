@@ -32,16 +32,13 @@ const routerMapList: RouteItem[] = [
 export const Router = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         {routerMapList.map((item, index) => (
           <Stack.Screen
             {...item}
             component={Welcome}
             key={`${item.name}-${index}`}
-            options={{
-              headerShown: false,
-              ...item.options,
-            }}
+            options={{ ...item.options }}
           />
         ))}
       </Stack.Navigator>
