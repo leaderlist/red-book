@@ -5,7 +5,7 @@ export const testSlice = createSlice({
   name: 'test',
   initialState: {
     value: 0,
-    name: 'bbbb'
+    name: 'bbbb',
   },
   reducers: {
     increment: (state) => {
@@ -13,7 +13,7 @@ export const testSlice = createSlice({
     },
     changeName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
-    }
+    },
   },
 });
 

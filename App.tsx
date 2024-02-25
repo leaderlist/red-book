@@ -6,10 +6,14 @@
  */
 
 import React from 'react';
-import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import { Platform, SafeAreaView, StatusBar, StyleSheet, UIManager } from 'react-native';
 import { Provider } from 'react-redux';
 import { Router } from './src/routers';
 import store from './src/stores';
+
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 function App(): React.JSX.Element {
   return (

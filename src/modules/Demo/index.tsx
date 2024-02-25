@@ -6,13 +6,12 @@ import Details from '../Details';
 const Stack = createNativeStackNavigator();
 
 function HomeScreen(props: any) {
-
   useEffect(() => {
     console.log('HomeScreen amount');
 
     return () => {
       console.log('HomeScreen unmount');
-    }
+    };
   }, []);
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -20,7 +19,7 @@ function HomeScreen(props: any) {
       <Button
         title="Go to PageB"
         onPress={() => {
-          console.log(2222)
+          console.log(2222);
           props.navigation.navigate('PageB');
         }}
       />
@@ -30,18 +29,14 @@ function HomeScreen(props: any) {
 
 export default HomeScreen;
 
-function test (props: any) {
+export function Demo(props: any) {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
       <Stack.Screen
         name="Details"
         component={Details}
-        options={{ headerShown: true, headerBackTitle: "返回", headerBackTitleStyle: { fontSize: 30 } }}
+        options={{ headerShown: true, headerBackTitle: '返回', headerBackTitleStyle: { fontSize: 30 } }}
       />
     </Stack.Navigator>
   );

@@ -1,26 +1,29 @@
-import { Text, View, Button } from 'react-native';
-import { RootState } from 'src/stores';
-import { useTestActions } from 'src/stores/testSlice';
-import { useAppSelector } from 'src/stores/hooks';
-import { getShallowEqual } from 'src/stores/utils';
-
-const welcomeShallow = getShallowEqual(['value']);
+import { Image, View } from 'react-native';
+import style from './style';
+import icon_main_logo from '../../assets/icon_main_logo.png';
+import { useEffect } from 'react';
+import { WELCOME_DELAY_TIME } from 'src/constants';
+import { useNavigation } from '@react-navigation/native';
 
 export const Welcome = () => {
-  const { value } = useAppSelector((state: RootState) => state.test, welcomeShallow);
-  const { increment, changeName } = useTestActions();
   console.log('rerender');
+  const navigate = useNavigation();
+  useEffect(() => {
+    // fetch useInfo and check login status
+    let timer = setTimeout(() => {
+      navigate.replace('Login');
+    }, WELCOME_DELAY_TIME);
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [navigate]);
+
   return (
-    <View>
-      <Text>Welcome page{value}</Text>
-      <Button
-        title="深蓝加点"
-        onPress={() => {
-          console.log(34444);
-          increment();
-        }}
-      />
-      <Button title="修改名字" onPress={() => changeName(Math.floor(Math.random() * 100) + '')} />
+    <View style={style.root}>
+      <Image style={style.logo} source={icon_main_logo} />
     </View>
   );
 };

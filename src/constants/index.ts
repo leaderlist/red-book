@@ -1,1 +1,1 @@
-export const DEFAULT_TEXT = "Hello World";
+export const WELCOME_DELAY_TIME = 3000;
