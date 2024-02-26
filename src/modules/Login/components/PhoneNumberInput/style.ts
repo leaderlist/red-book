@@ -30,11 +30,11 @@ export default StyleSheet.create({
     height: 32,
     paddingVertical: 4,
     fontSize: 18,
-    paddingRight: 32,
+    paddingRight: 30,
   },
   clearIcon: {
     position: 'absolute',
-    right: 6,
+    right: 3,
     bottom: 10,
   },
 });

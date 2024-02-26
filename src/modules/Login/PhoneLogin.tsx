@@ -57,7 +57,6 @@ export const PhoneLogin = ({ navigation }: { navigation: NavigationProps }) => {
 
   const handleLoginButtonPress = () => {
     if (!isSelected) {
-      console.log('open protocol modal');
       protocolModalRef.current?.changeVisible(true);
       return;
     }

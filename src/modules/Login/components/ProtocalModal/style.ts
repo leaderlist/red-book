@@ -6,6 +6,11 @@ export default StyleSheet.create({
     height: '100%',
     backgroundColor: '#010101a0',
   },
+  moveContainer: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#a1a1a170',
+  },
   modalView: {
     width: '100%',
     height: 205,
@@ -14,11 +19,15 @@ export default StyleSheet.create({
     bottom: 0,
     backgroundColor: 'white',
     opacity: 1,
+    alignItems: 'center',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'center',
     paddingVertical: 12,
+    width: '100%',
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#e6e6e6',
   },
   headerText: {
     fontSize: 16,
@@ -35,7 +44,27 @@ export default StyleSheet.create({
     height: 16,
   },
   content: {
-
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: '100%',
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 40,
   },
-  protocol: {},
+  linkText: {
+    fontSize: 10,
+    color: '#19355d',
+  },
+  agree: {
+    backgroundColor: 'red',
+    height: 36,
+    borderRadius: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '90%',
+  },
+  agreeText: {
+    color: 'white',
+  }
 });

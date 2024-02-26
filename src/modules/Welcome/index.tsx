@@ -1,4 +1,4 @@
-import { Image, View } from 'react-native';
+import { BackHandler, Image, View } from 'react-native';
 import style from './style';
 import icon_main_logo from '../../assets/icon_main_logo.png';
 import { useEffect } from 'react';
@@ -14,10 +14,15 @@ export const Welcome = () => {
       navigate.replace('Login');
     }, WELCOME_DELAY_TIME);
 
+    const backHandle = BackHandler.addEventListener('hardwareBackPress', () => {
+      return true;
+    });
+
     return () => {
       if (timer) {
         clearTimeout(timer);
       }
+      backHandle.remove();
     };
   }, [navigate]);
 

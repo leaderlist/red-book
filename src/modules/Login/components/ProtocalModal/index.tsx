@@ -1,7 +1,21 @@
-import { Modal, Text, View, Image, TouchableOpacity, LayoutAnimation, Dimensions, Animated, StyleSheet } from 'react-native';
+import {
+  Modal,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  LayoutAnimation,
+  Dimensions,
+  Animated,
+  StyleSheet,
+  BackHandler,
+} from 'react-native';
 import style from './style';
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import icon_close_modal from 'src/assets/icon_close_modal.png';
+import { ProtocolList } from 'src/constants/login';
+import { useLoginActions } from 'src/stores/loginSlice';
+import { useNavigation } from '@react-navigation/native';
 
 interface Props {
   visible?: boolean;
@@ -11,40 +25,60 @@ interface Props {
 export interface ModelRef {
   changeVisible: (visible: boolean) => void;
 }
-
-const windowHeight = Dimensions.get('window').height;
+const ContentHeight = 205;
 
 export const ProtocolModal = forwardRef<ModelRef, Props>((props, ref) => {
   const [visible, setVisible] = useState(false);
+  const { changeSelected } = useLoginActions();
 
   useImperativeHandle<ModelRef, ModelRef>(ref, () => ({
     changeVisible,
   }));
 
-  const changeVisible = (visible: boolean) => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    Animated.timing(marginTop, {
-      toValue: visible ? 0 : windowHeight,
-      duration: 500,
+  useEffect(() => {
+    Animated.timing(translateY, {
+      toValue: visible ? 0 : ContentHeight,
+      duration: 300,
       useNativeDriver: false,
     }).start();
+  }, [visible]);
+
+  const changeVisible = (visible: boolean) => {
     setVisible(visible);
   };
 
-  const marginTop = useRef(new Animated.Value(windowHeight)).current;
+  const translateY = useRef(new Animated.Value(ContentHeight)).current;
+
+  const handleAgreePress = () => {
+    changeVisible(false);
+    changeSelected(true);
+  };
 
   return (
-    <Modal animationType="slide" transparent={true} visible={visible} statusBarTranslucent>
-      <Animated.View style={[style.container, { height: windowHeight * 2 }]}>
-        <View style={StyleSheet.compose(style.modalView, { marginTop })}>
+    <Modal animationType="fade" transparent={true} visible={visible} statusBarTranslucent>
+      <View
+        style={style.container}
+        onResponderEnd={() => changeVisible(false)}
+        onStartShouldSetResponder={() => true}>
+        <Animated.View style={StyleSheet.compose(style.modalView, { transform: [{ translateY }] })}>
           <View style={style.header}>
             <Text style={style.headerText}>请阅读并同意以下条款</Text>
             <TouchableOpacity style={style.closeButton} activeOpacity={1} onPress={() => changeVisible(false)}>
               <Image source={icon_close_modal} style={style.closeIcon} />
             </TouchableOpacity>
           </View>
-        </View>
-      </Animated.View>
+          <View style={style.content}>
+            {ProtocolList.map((item, index) => (
+              <Text style={style.linkText} key={`${item.text}-${index}`} numberOfLines={2}>
+                {item.text}
+              </Text>
+            ))}
+          </View>
+          <TouchableOpacity activeOpacity={1} style={style.agree} onPress={() => handleAgreePress()}>
+            <Text style={style.agreeText}>同意并继续</Text>
+          </TouchableOpacity>
+        </Animated.View>
+      </View>
     </Modal>
   );
 });

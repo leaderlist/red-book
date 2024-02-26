@@ -29,7 +29,7 @@ const Stack = createNativeStackNavigator();
 const routerMapList: RouteItem[] = [
   {
     name: 'Welcome',
-    component: Welcome,
+    component: Welcome
   },
   {
     name: 'Home',
