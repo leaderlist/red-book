@@ -1,3 +1,5 @@
+import QS from 'qs';
+
 type RequestMethods = 'GET' | 'POST' | 'PUT' | 'DELETE';
 // fetch.interceptors.request.use(function (config) {
 // return {...config, customConfig};
@@ -74,14 +76,10 @@ export default class MyFetch {
 
     const { baseUrl, ...resetConfig } = config;
 
-    const init = {
-      ...resetConfig,
-      ...options,
-      method,
-    };
+    const init = { ...resetConfig, ...options, method };
 
     if (data) {
-      init.body = data;
+      init.body = JSON.stringify(data);
     }
 
     if (baseUrl) {
@@ -90,6 +88,10 @@ export default class MyFetch {
 
     try {
       const response = await fetch(url, init).then((res) => {
+        if (res.status !== 200) {
+          console.log(44444, res.statusText);
+          return Promise.reject(res.statusText);
+        }
         return res.json();
       });
 
@@ -97,15 +99,17 @@ export default class MyFetch {
         return currentCallback(prevResponse);
       }, response);
     } catch (error) {
-      return this.responseRejectInterceptors.reduce((prevResponse, currentCallback) => {
+      const resultError = this.responseRejectInterceptors.reduce((prevResponse, currentCallback) => {
         return currentCallback(prevResponse);
       }, error as Error);
+      return Promise.reject(resultError);
     }
   }
 
   // data改为query,类型为键值对
-  get(url: string, data?: BodyInit_ | null, options?: FetchConfig) {
-    return this.fetch(url, 'GET', data, options);
+  get<Request, Response>(url: string, data?: Request | null, options?: FetchConfig): Promise<Response> {
+    const realUrl = `${url}?${QS.stringify(data)}`;
+    return this.fetch(realUrl, 'GET', null, options);
   }
 
   // 参数改为params,类型为any

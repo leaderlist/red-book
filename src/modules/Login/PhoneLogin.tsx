@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, ToastAndroid } from 'react-native';
 import { PhoneLoginStyle as style } from './style';
 import { NavigationProps } from 'src/types';
 import icon_close from 'src/assets/icon_close_modal.png';
@@ -12,6 +12,8 @@ import { isNumber, isRealPhoneNumber } from 'src/utils';
 import { VerificationCodeInput } from './components/VerificationCodeInput';
 import { useAppSelector } from 'src/stores/hooks';
 import { ModelRef, ProtocolModal } from './components/ProtocalModal';
+import { login } from 'src/apis/user';
+import { useUserInfoAction } from 'src/stores/userSlice';
 
 enum LoginWay {
   PhoneNumber = 'phoneNumber',
@@ -48,6 +50,7 @@ export const PhoneLogin = ({ navigation }: { navigation: NavigationProps }) => {
   const protocolModalRef = useRef<ModelRef>(null);
 
   const isSelected = useAppSelector((state) => state.login.isSelected);
+  const { changeUserInfo } = useUserInfoAction();
 
   useEffect(() => {
     if (loginWay === LoginWay.PhoneNumber) {
@@ -67,7 +70,16 @@ export const PhoneLogin = ({ navigation }: { navigation: NavigationProps }) => {
         setShowVerificationCode(true);
       }
     } else {
-      // 密码登录
+      // 密码登录,当前接口只支持该模式
+      const params = { name: 'dagongjue', pwd: '1234565' };
+      login(params)
+        .then((res) => {
+          if (res.name) {
+            changeUserInfo(res);
+            navigation.replace('Home');
+          }
+        })
+        .catch((err) => ToastAndroid.showWithGravity(err || '登陆失败，请重试', ToastAndroid.SHORT, ToastAndroid.TOP));
     }
   };
 

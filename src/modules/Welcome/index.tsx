@@ -2,29 +2,36 @@ import { BackHandler, Image, View } from 'react-native';
 import style from './style';
 import icon_main_logo from '../../assets/icon_main_logo.png';
 import { useEffect } from 'react';
-import { WELCOME_DELAY_TIME } from 'src/constants';
 import { useNavigation } from '@react-navigation/native';
+import { Status, checkUserInfo } from 'src/stores/userSlice';
+import store from 'src/stores';
+import { useAppSelector } from 'src/stores/hooks';
 
 export const Welcome = () => {
   console.log('rerender');
   const navigate = useNavigation();
+  const status = useAppSelector((state) => state.user.status);
   useEffect(() => {
     // fetch useInfo and check login status
-    let timer = setTimeout(() => {
-      navigate.replace('Login');
-    }, WELCOME_DELAY_TIME);
+    store.dispatch(checkUserInfo);
+    console.log('check');
 
     const backHandle = BackHandler.addEventListener('hardwareBackPress', () => {
       return true;
     });
 
     return () => {
-      if (timer) {
-        clearTimeout(timer);
-      }
       backHandle.remove();
     };
   }, [navigate]);
+
+  useEffect(() => {
+    if (status === Status.Success) {
+      navigate.replace('Home');
+    } else if (status === Status.Failed) {
+      navigate.replace('Login');
+    }
+  }, [navigate, status]);
 
   return (
     <View style={style.root}>
