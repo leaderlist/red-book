@@ -45,8 +45,12 @@ export const userSlice = createSlice({
         state.status = Status.Loading;
       })
       .addCase(checkUserInfo.fulfilled, (state, action) => {
-        state.status = Status.Success;
-        state.userInfo = action.payload;
+        if (action.payload) {
+          state.status = Status.Success;
+          state.userInfo = action.payload;
+        } else {
+          state.status = Status.Failed;
+        }
       })
       .addCase(checkUserInfo.rejected, (state) => {
         state.status = Status.Failed;

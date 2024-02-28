@@ -13,8 +13,7 @@ export const Welcome = () => {
   const status = useAppSelector((state) => state.user.status);
   useEffect(() => {
     // fetch useInfo and check login status
-    store.dispatch(checkUserInfo);
-    console.log('check');
+    store.dispatch(checkUserInfo());
 
     const backHandle = BackHandler.addEventListener('hardwareBackPress', () => {
       return true;
@@ -29,7 +28,7 @@ export const Welcome = () => {
     if (status === Status.Success) {
       navigate.replace('Home');
     } else if (status === Status.Failed) {
-      navigate.replace('Login');
+      navigate.replace('Home');
     }
   }, [navigate, status]);
 

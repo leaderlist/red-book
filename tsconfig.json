@@ -11,10 +11,10 @@
       "routers/*": ["src/routers/*"],
       "assets/*": ["src/assets/*"],
       "constants/*": ["src/constants/*"],
-      "types*": ["src/types/*"],
+      "types*": ["src/types/*"]
     },
     "resolveJsonModule": true,
     "moduleResolution": "node"
   },
-  "include": ["src"]
+  "include": ["src", "global.d.ts", "global.d.ts"]
 }
