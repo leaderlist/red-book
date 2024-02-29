@@ -1,4 +1,4 @@
-import { stringify_default, parse_int_default } from './webpack';
+import { stringify_default, parse_int_default, map_default } from './webpack';
 import { params } from './constant';
 
 var encrypt_lookup = [];
@@ -8,7 +8,6 @@ function a0_0x10f4ac(t, e) {
 }
 
 function a0_0x3693(t, e) {
-  console.log('a0_0x3693 params is', t, e);
   var r = a0_0x1131();
   return (a0_0x3693 = function (t, e) {
     return r[(t -= 131)];
@@ -695,6 +694,701 @@ function encrypt_tripletToBase64(t) {
     encrypt_lookup[(t >> 6) & 63] +
     encrypt_lookup[y[m(-a, -d)](t, 63)]
   );
+}
+
+const NEED_XSCOMMON_URLS = [
+  'fe_api/burdock/v2/user/keyInfo',
+  'fe_api/burdock/v2/shield/profile',
+  'fe_api/burdock/v2/shield/captcha',
+  'fe_api/burdock/v2/shield/registerCanvas',
+  'api/sec/v1/shield/webprofile',
+  'api/sec/v1/shield/captcha',
+  /fe_api\/burdock\/v2\/note\/[0-9a-zA-Z]+\/tags/,
+  /fe_api\/burdock\/v2\/note\/[0-9a-zA-Z]+\/image_stickers/,
+  /fe_api\/burdock\/v2\/note\/[0-9a-zA-Z]+\/other\/notes/,
+  /fe_api\/burdock\/v2\/note\/[0-9a-zA-Z]+\/related/,
+  '/fe_api/burdock/v2/note/post',
+  '/api/sns/web',
+  '/api/redcaptcha',
+  '/api/store/jpd/main',
+];
+
+const js_cookie = __webpack_require__(72118), concat = __webpack_require__(60056), concat_default = __webpack_require__.n(concat), some = __webpack_require__(97397), some_default = __webpack_require__.n(some), map = __webpack_require__(21153), map_default = __webpack_require__.n(map), PULL_BLOCK_STATUS = 461, NONE_FINGERPRINT_STATUS = 462, RISK_LOGIN_STATUS = 465, RISK_SPAM_STATUS = 471, const_ORGANIZATION = "eR46sBuqF0fdw7KWFLYa", RC4_SECRET_VERSION = "1", LOCAL_ID_SECRET_VERSION = "0", RC4_SECRET_VERSION_KEY = "b1b1", LOCAL_ID_KEY = "a1", WEB_ID_KEY = "webId", GID = "gid", MINI_BROSWER_INFO_KEY = "b1", SIGN_COUNT_KEY = "sc", version = "3.6.8";
+
+function getSigCount(t) {
+  var e = Number(sessionStorage?.getItem(SIGN_COUNT_KEY)) || 0;
+  return t && (e++,
+  sessionStorage?.setItem(SIGN_COUNT_KEY, e.toString())),
+  e
+}
+
+var esm_typeof = __webpack_require__(9285);
+
+var encrypt_mcr = function(t) {
+  var e = 67
+    , r = 15
+    , n = 164
+    , o = 126
+    , i = 137
+    , a = 39
+    , u = 176
+    , c = 72
+    , s = 56
+    , l = 21
+    , f = 35
+    , p = 34
+    , h = 35
+    , d = 18
+    , v = 25
+    , g = 185
+    , m = 1149
+    , y = 744
+    , w = 1295
+    , b = 1248
+    , _ = 1310
+    , E = 1096
+    , x = 1166
+    , k = 1095
+    , T = 1196
+    , S = 1180
+    , L = 1039
+    , O = 976
+    , A = 1347
+    , R = 1117
+    , I = 1168
+    , C = 1233
+    , N = 1157
+    , P = 1006
+    , B = 1122
+    , F = 1277
+    , M = 1288
+    , j = 1271
+    , D = 986
+    , U = 162
+    , q = {};
+  function Z(t, e) {
+      return a0_0x10f4ac(e, t - U)
+  }
+  q[Z(-73, -66)] = function(t, e) {
+      return t === e
+  }
+  ,
+  q[Z(e, 186)] = function(t, e) {
+      return t < e
+  }
+  ,
+  q[Z(-r, -n)] = function(t, e) {
+      return t ^ e
+  }
+  ,
+  q[Z(r, -o)] = function(t, e) {
+      return t & e
+  }
+  ,
+  q[Z(-i, -a)] = function(t, e) {
+      return t < e
+  }
+  ,
+  q[Z(-175, -u)] = function(t, e) {
+      return t ^ e
+  }
+  ,
+  q[Z(-59, c)] = function(t, e) {
+      return t ^ e
+  }
+  ,
+  q[Z(-s, -l)] = function(t, e) {
+      return t >>> e
+  }
+  ,
+  q[Z(f, p)] = function(t, e) {
+      return t >>> e
+  }
+  ;
+  for (var G, H, V = q, Y = 3988292384, W = 256, z = []; W--; z[W] = V[Z(h, -66)](G, 0))
+      for (H = 8,
+      G = W; H--; )
+          G = V[Z(r, d)](G, 1) ? V[Z(35, v)](G, 1) ^ Y : V[Z(h, g)](G, 1);
+  return function(t) {
+      function e(t, e) {
+          return Z(e - 1181, t)
+      }
+      if (V[e(m, 1108)]((0,
+      esm_typeof.Z)(t), e(y, 914))) {
+          for (var r = 0, n = -1; V[e(w, b)](r, t[e(_, 1233)]); ++r)
+              n = V[e(E, x)](z[V[e(k, T)](n, 255) ^ t[e(S, L) + e(1022, O)](r)], n >>> 8);
+          return V[e(A, 1166)](n, -1) ^ Y
+      }
+      for (r = 0,
+      n = -1; V[e(R, 1044)](r, t[e(I, C)]); ++r)
+          n = V[e(N, P)](z[V[e(1229, B)](V[e(F, T)](n, 255), t[r])], V[e(M, 1125)](n, 8));
+      return V[e(j, B)](V[e(D, 1122)](n, -1), Y)
+  }
+}();
+
+function xsCommon(t, e) {
+  try {
+    var r,
+      n,
+      o = t.platform,
+      i = e.url,
+      a = map_default()(NEED_XSCOMMON_URLS).call(NEED_XSCOMMON_URLS, function (t) {
+        return new RegExp(t);
+      });
+    if (
+      !some_default()(a).call(a, function (t) {
+        return t.test(i);
+      })
+    )
+      return e;
+    var u = e.headers['X-t'] || '',
+      c = e.headers['X-s'] || '',
+      s = e.headers['X-Sign'] || '',
+      l = getSigCount((u && c) || s),
+      f = localStorage.getItem(MINI_BROSWER_INFO_KEY),
+      p = localStorage.getItem(RC4_SECRET_VERSION_KEY) || RC4_SECRET_VERSION,
+      h = {
+        s0: getPlatformCode(o), // Android
+        s1: '',
+        // todo,修改storage读取方式，找到setItem的地方
+        x0: p, // localStorage.getItem(RC4_SECRET_VERSION_KEY) || RC4_SECRET_VERSION
+        x1: version, // 目前是3.6.8
+        x2: o || 'PC', // 尝试改成Android
+        x3: 'xhs-pc-web', // 尝试改成 'xhs-mobile-android'
+        x4: '4.2.5',
+        x5: js_cookie.Z.get(LOCAL_ID_KEY),
+        x6: u, // X-t
+        x7: c, // X-s
+        x8: f, // localStorage.getItem(MINI_BROSWER_INFO_KEY)
+        x9: encrypt_mcr(concat_default()((r = concat_default()((n = ''.concat(u))).call(n, c))).call(r, f)),
+        x10: l,
+      };
+    e.headers['X-S-Common'] = encrypt_b64Encode(encrypt_encodeUtf8(stringify_default()(h)));
+  } catch (d) {}
+  return e;
+}
+
+var PlatformCode;
+
+function getPlatformCode(t) {
+  switch (t) {
+  case "Android":
+      return PlatformCode.Android;
+  case "iOS":
+      return PlatformCode.iOS;
+  case "Mac OS":
+      return PlatformCode.MacOs;
+  case "Linux":
+      return PlatformCode.Linux;
+  default:
+      return PlatformCode.other
+  }
+}
+
+(function getPlatForm (t) {
+  t[t.Windows = 0] = "Windows",
+  t[t.iOS = 1] = "iOS",
+  t[t.Android = 2] = "Android",
+  t[t.MacOs = 3] = "MacOs",
+  t[t.Linux = 4] = "Linux",
+  t[t.other = 5] = "other"
+})(PlatformCode || (PlatformCode = {}))
+
+!function(t, e) {
+  var r = 401
+    , n = 506
+    , o = 337
+    , i = 281
+    , a = 460
+    , u = 347
+    , c = 346
+    , s = 432
+    , l = 614
+    , f = 518
+    , p = 338
+    , h = 301
+    , d = 226
+    , v = 144
+    , g = 151
+    , m = 293
+    , y = 112
+    , w = 256
+    , b = 190
+    , _ = t();
+  function E(t, e) {
+      return a0_0x3693(t - -627, e)
+  }
+  for (; ; )
+      try {
+          if (400191 === parse_int_default()(E(-r, -n)) / 1 + parse_int_default()(E(-o, -i)) / 2 * (parse_int_default()(E(-a, -u)) / 3) + -parse_int_default()(E(-329, -c)) / 4 * (parse_int_default()(E(-s, -l)) / 5) + -parse_int_default()(E(-362, -f)) / 6 * (parse_int_default()(E(-p, -h)) / 7) + -parse_int_default()(E(-d, -v)) / 8 * (parse_int_default()(E(-g, -28)) / 9) + parse_int_default()(E(-m, -y)) / 10 + parse_int_default()(E(-w, -b)) / 11)
+              break;
+          _.push(_.shift())
+      } catch (x) {
+          _.push(_.shift())
+      }
+}(a0_0x1131);
+
+var esm_typeof = __webpack_require__(9285);
+function encrypt_sign(t, e) {
+  var r = 279
+    , n = 151
+    , o = 325
+    , i = 370
+    , a = 381
+    , u = 225
+    , c = 382
+    , s = 200
+    , l = 355
+    , f = 180
+    , p = 602
+    , h = 500
+    , d = 582
+    , v = 271
+    , g = 449
+    , m = 550
+    , y = 584
+    , w = 317
+    , b = 385
+    , _ = 423
+    , E = 375
+    , x = 531
+    , k = 662
+    , T = 457
+    , S = 323
+    , L = 472
+    , O = 566
+    , A = 720
+    , R = 423
+    , I = 445
+    , C = 581
+    , N = 680
+    , P = 296
+    , B = 244
+    , F = 559
+    , M = 460
+    , j = 413
+    , D = 460
+    , U = 439
+    , q = 567
+    , Z = 577
+    , G = 603
+    , H = 750
+    , V = 448
+    , Y = 250
+    , W = 300
+    , z = 369
+    , X = 213
+    , K = 252
+    , J = 405
+    , $ = 574
+    , Q = 433
+    , tt = 368
+    , et = 599
+    , rt = 631
+    , nt = 254
+    , ot = 440
+    , it = 412
+    , at = 464
+    , ut = 505
+    , ct = 590
+    , st = 674
+    , lt = 245
+    , ft = 560
+    , pt = 548
+    , ht = 451
+    , dt = 590
+    , vt = 358
+    , gt = 310
+    , mt = 419
+    , yt = 456
+    , wt = 309
+    , bt = 555
+    , _t = 386
+    , Et = 216
+    , xt = 507
+    , kt = 318
+    , Tt = 304
+    , St = 448
+    , Lt = 120
+    , Ot = 567
+    , At = 83
+    , Rt = 396
+    , It = 425
+    , Ct = 4
+    , Nt = 361
+    , Pt = 223
+    , Bt = 131
+    , Ft = 742
+    , Mt = 1024
+    , jt = 1498
+    , Dt = 218
+    , Ut = 257
+    , qt = 739
+    , Zt = 735
+    , Gt = 1236
+    , Ht = 749
+    , Vt = 253
+    , Yt = 401
+    , Wt = 288
+    , zt = 883
+    , Xt = 702
+    , Kt = 277
+    , Jt = 100
+    , $t = 1073
+    , Qt = 1182
+    , te = 1637
+    , ee = 19
+    , re = 137
+    , ne = 590
+    , oe = 535
+    , ie = 606
+    , ae = 724
+    , ue = 692
+    , ce = 505
+    , se = 520
+    , le = 606
+    , fe = 572
+    , pe = 511
+    , he = 353
+    , de = 524
+    , ve = 641
+    , ge = 698
+    , me = 574
+    , ye = 750
+    , we = 524
+    , be = 773
+    , _e = 653
+    , Ee = 765
+    , xe = 450
+    , ke = 536
+    , Te = 644
+    , Se = 524
+    , Le = 847
+    , Oe = 702
+    , Ae = 732
+    , Re = 980
+    , Ie = 810
+    , Ce = 436
+    , Ne = 568
+    , Pe = 657
+    , Be = 568
+    , Fe = 550
+    , Me = 698
+    , je = 751
+    , De = 840
+    , Ue = 615
+    , qe = 698
+    , Ze = 762
+    , Ge = 415
+    , He = 418
+    , Ve = 612
+    , Ye = 675
+    , We = 638
+    , ze = 663
+    , Xe = 324
+    , Ke = 422
+    , Je = 378
+    , $e = 330
+    , Qe = 417
+    , tr = 602
+    , er = 391
+    , rr = 432
+    , nr = 524
+    , or = 619
+    , ir = 449
+    , ar = 432
+    , ur = 823
+    , cr = 686
+    , sr = 514
+    , lr = 658
+    , fr = 281
+    , pr = 251
+    , hr = 432
+    , dr = 840
+    , vr = 686
+    , gr = 414
+    , mr = 422
+    , yr = 366
+    , wr = 490
+    , br = 421
+    , _r = 607
+    , Er = 371
+    , xr = 382
+    , kr = 167
+    , Tr = {
+      KDfKS: Sr(-278, -261) + Sr(-r, -n) + Sr(-o, -i),
+      tzzOB: function(t, e) {
+          return t(e)
+      },
+      YgiCH: function(t, e) {
+          return t !== e
+      },
+      ObwNo: Sr(-376, -428) + "ed",
+      qYuta: Sr(-a, -474),
+      wOmGY: Sr(-399, -u) + Sr(-c, -s) + Sr(-l, -f) + Sr(-532, -p) + Sr(-h, -d) + Sr(-v, -g) + Sr(-m, -y) + Sr(-w, -b) + Sr(-_, -E) + "m3",
+      Qwnrg: Sr(-x, -k),
+      TURcG: function(t, e) {
+          return t === e
+      },
+      KAwuh: Sr(-566, -T) + Sr(-S, -L) + "]",
+      htSWx: Sr(-O, -A) + Sr(-384, -R),
+      HhPqg: function(t, e) {
+          return t < e
+      },
+      HRihr: function(t, e) {
+          return t > e
+      },
+      lWzAd: function(t, e) {
+          return t | e
+      },
+      jarkJ: function(t, e) {
+          return t >> e
+      },
+      kQpMi: function(t, e) {
+          return t | e
+      },
+      LMlMB: function(t, e) {
+          return t & e
+      },
+      dXlgm: function(t, e) {
+          return t >> e
+      },
+      LjDtD: function(t, e) {
+          return t | e
+      },
+      WgamZ: function(t, e) {
+          return t & e
+      },
+      WLARA: function(t, e) {
+          return t | e
+      },
+      UBhIl: Sr(-489, -I) + Sr(-C, -N) + Sr(-P, -421),
+      HKazo: function(t, e) {
+          return t << e
+      },
+      HrBeq: function(t, e) {
+          return t << e
+      },
+      jMcIE: function(t, e) {
+          return t + e
+      }
+  };
+  function Sr(t, e) {
+      return a0_0x10f4ac(e, t - -kr)
+  }
+  for (var Lr = Tr[Sr(-343, -B)][Sr(-E, -F)]("|"), Or = 0; ; ) {
+      switch (Lr[Or++]) {
+      case "0":
+          return {
+              "X-s": Tr[Sr(-M, -j)](Nr, Tr[Sr(-D, -U)](encrypt_MD5, [Cr, Pr, t, Br ? JSON[Sr(-q, -Z) + "fy"](e) : ""][Sr(-G, -H)](""))),
+              "X-t": Cr
+          };
+      case "1":
+          var Ar = function(t) {
+              t = t[o(-Ze, -661)](/\r\n/g, "\n");
+              for (var e = "", r = 0; r < t[o(-Ge, -He)]; r++) {
+                  var n = t[o(-515, -Ve) + o(-678, -Ye)](r);
+                  Fr[o(-We, -ze)](n, 128) ? e += String[o(-Xe, -Ke) + o(-Je, -432)](n) : Fr[o(-$e, -Qe)](n, 127) && Fr[o(-579, -tr)](n, 2048) ? (e += String[o(-417, -Ke) + o(-er, -rr)](Fr[o(-548, -nr)](Fr[o(-or, -ir)](n, 6), 192)),
+                  e += String[o(-582, -Ke) + o(-560, -ar)](Fr[o(-ur, -cr)](Fr[o(-sr, -lr)](n, 63), 128))) : (e += String[o(-fr, -Ke) + o(-pr, -hr)](Fr[o(-dr, -vr)](Fr[o(-500, -gr)](n, 12), 224)),
+                  e += String[o(-475, -mr) + o(-yr, -432)](Fr[o(-605, -wr)](Fr[o(-435, -br)](Fr[o(-_r, -567)](n, 6), 63), 128)),
+                  e += String[o(-Er, -422) + o(-xr, -hr)](Fr[o(-808, -710)](Fr[o(-444, -br)](n, 63), 128)))
+              }
+              function o(t, e) {
+                  return Sr(e - -141, t)
+              }
+              return e
+          };
+          continue;
+      case "2":
+          Tr[Sr(-459, -V)]((0,
+          esm_typeof.Z)(Rr), Tr[Sr(-368, -Y)]) && Rr && Rr[Sr(-369, -W) + "or"] && Rr[Sr(-z, -401) + "or"][Sr(-346, -X) + "nt"] && Rr[Sr(-K, -J)] && (Pr = Tr[Sr(-$, -Q)]);
+          continue;
+      case "3":
+          var Rr = ("undefined" == typeof window ? "undefined" : (0,
+          esm_typeof.Z)(window)) === Tr[Sr(-tt, -511)] ? __webpack_require__.g : window;
+          continue;
+      case "4":
+          var Ir = Tr[Sr(-et, -rt)];
+          continue;
+      case "5":
+          var Cr = (new Date)[Sr(-nt, -261)]();
+          continue;
+      case "6":
+          var Nr = function(t) {
+              var e = Fr[r(-ne, -598)][r(-oe, -ie)]("|");
+              function r(t, e) {
+                  return Sr(e - -231, t)
+              }
+              for (var n = 0; ; ) {
+                  switch (e[n++]) {
+                  case "0":
+                      var o, i, a, u, c, s, l;
+                      continue;
+                  case "1":
+                      var f = "";
+                      continue;
+                  case "2":
+                      var p = 0;
+                      continue;
+                  case "3":
+                      for (; Fr[r(-ae, -ue)](p, t[r(-ce, -508)]); )
+                          for (var h = Fr[r(-556, -723)][r(-se, -le)]("|"), d = 0; ; ) {
+                              switch (h[d++]) {
+                              case "0":
+                                  s = Fr[r(-726, -fe)](Fr[r(-339, -pe)](i, 15), 2) | Fr[r(-he, -de)](a, 6);
+                                  continue;
+                              case "1":
+                                  l = Fr[r(-ve, -pe)](a, 63);
+                                  continue;
+                              case "2":
+                                  Fr[r(-699, -795)](isNaN, i) ? s = l = 64 : Fr[r(-ge, -795)](isNaN, a) && (l = 64);
+                                  continue;
+                              case "3":
+                                  i = t[r(-me, -702) + r(-ye, -765)](p++);
+                                  continue;
+                              case "4":
+                                  u = Fr[r(-397, -we)](o, 2);
+                                  continue;
+                              case "5":
+                                  a = t[r(-be, -702) + r(-_e, -Ee)](p++);
+                                  continue;
+                              case "6":
+                                  c = Fr[r(-xe, -ke)](3 & o, 4) | Fr[r(-Te, -Se)](i, 4);
+                                  continue;
+                              case "7":
+                                  o = t[r(-Le, -Oe) + r(-Ae, -765)](p++);
+                                  continue;
+                              case "8":
+                                  f = Fr[r(-Re, -Ie)](Fr[r(-Ce, -Ne)](Fr[r(-Pe, -Be)](f, Ir[r(-Fe, -Me)](u)) + Ir[r(-je, -698)](c), Ir[r(-De, -Me)](s)), Ir[r(-Ue, -qe)](l));
+                                  continue
+                              }
+                              break
+                          }
+                      continue;
+                  case "4":
+                      t = Ar(t);
+                      continue;
+                  case "5":
+                      return f
+                  }
+                  break
+              }
+          };
+          continue;
+      case "7":
+          var Pr = Tr[Sr(-ot, -it)];
+          continue;
+      case "8":
+          var Br = Tr[Sr(-at, -ut)](Object[Sr(-ct, -st) + "pe"][Sr(-358, -lt) + "g"][Sr(-419, -ft)](e), Tr[Sr(-pt, -ht)]) || Object[Sr(-dt, -500) + "pe"][Sr(-vt, -gt) + "g"][Sr(-mt, -yt)](e) === Tr[Sr(-wt, -138)];
+          continue;
+      case "9":
+          var Fr = {
+              mwaRe: function(t, e) {
+                  var r, n;
+                  return Tr[(r = ee,
+                  n = re,
+                  Sr(n - 607, r))](t, e)
+              },
+              UNYAE: function(t, e) {
+                  return Tr[(r = $t,
+                  n = Qt,
+                  Sr(n - te, r))](t, e);
+                  var r, n
+              },
+              VIwfH: function(t, e) {
+                  return t < e
+              },
+              rMbXP: function(t, e) {
+                  var r, n;
+                  return Tr[(r = Kt,
+                  n = Jt,
+                  Sr(r - 615, n))](t, e)
+              },
+              hEwRK: function(t, e) {
+                  return Tr[(r = 156,
+                  n = 172,
+                  Sr(r - Xt, n))](t, e);
+                  var r, n
+              },
+              WjRNN: function(t, e) {
+                  return Tr[(r = Yt,
+                  n = Wt,
+                  Sr(n - zt, r))](t, e);
+                  var r, n
+              },
+              ViQWI: function(t, e) {
+                  return Tr[(r = -Ht,
+                  n = -586,
+                  Sr(n - -Vt, r))](t, e);
+                  var r, n
+              },
+              pYeWu: function(t, e) {
+                  return Tr[(r = qt,
+                  n = Zt,
+                  Sr(n - Gt, r))](t, e);
+                  var r, n
+              },
+              HzGjH: function(t, e) {
+                  var r, n;
+                  return Tr[(r = Dt,
+                  n = Ut,
+                  Sr(n - 858, r))](t, e)
+              },
+              StNOc: function(t, e) {
+                  return Tr[(r = 913,
+                  n = Mt,
+                  Sr(n - jt, r))](t, e);
+                  var r, n
+              },
+              DeBtm: function(t, e) {
+                  return Tr[(r = Bt,
+                  n = 241,
+                  Sr(n - Ft, r))](t, e);
+                  var r, n
+              },
+              mmLKn: function(t, e) {
+                  return Tr[(r = -Nt,
+                  n = -527,
+                  Sr(r - Pt, n))](t, e);
+                  var r, n
+              },
+              qPbcq: Sr(-bt, -502) + Sr(-_t, -Et),
+              BGbij: Tr[Sr(-328, -xt)],
+              lxMGW: function(t, e) {
+                  return Tr[(r = -Rt,
+                  n = -It,
+                  Sr(n - -Ct, r))](t, e);
+                  var r, n
+              },
+              tTiwe: function(t, e) {
+                  return t >> e
+              },
+              jSgjk: function(t, e) {
+                  return t(e)
+              },
+              VuAZF: function(t, e) {
+                  return Tr[(r = -651,
+                  n = -Ot,
+                  Sr(n - -At, r))](t, e);
+                  var r, n
+              },
+              Oialn: function(t, e) {
+                  return Tr[(r = -Tt,
+                  n = -St,
+                  Sr(n - Lt, r))](t, e);
+                  var r, n
+              },
+              eyXTL: function(t, e) {
+                  var r, n;
+                  return Tr[(r = -186,
+                  n = -kt,
+                  Sr(r - 382, n))](t, e)
+              }
+          };
+          continue
+      }
+      break
+  }
 }
 
 export const getXSCommon = () => encrypt_b64Encode(encrypt_encodeUtf8(stringify_default()(params)));
