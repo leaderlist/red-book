@@ -1,20 +1,21 @@
-import { stringify_default, parse_int_default, map_default } from './webpack';
+import { map_default, __webpack_require__ } from './webpack';
 import { params } from './constant';
 
-var encrypt_lookup = [];
+var encrypt_lookup = [],
+  encrypt_len = '';
 
-function a0_0x10f4ac(t, e) {
+export function a0_0x10f4ac(t, e) {
   return a0_0x3693(e - -570, t);
 }
 
-function a0_0x3693(t, e) {
+export function a0_0x3693(t, e) {
   var r = a0_0x1131();
   return (a0_0x3693 = function (t, e) {
     return r[(t -= 131)];
   })(t, e);
 }
 
-function a0_0x1131() {
+export function a0_0x1131() {
   var t = [
     'loSen',
     'navigat',
@@ -390,21 +391,7 @@ function a0_0x1131() {
 }
 
 for (
-  var encrypt_code =
-      a0_0x10f4ac(-179, -298) +
-      a0_0x10f4ac(-369, -279) +
-      a0_0x10f4ac(-467, -311) +
-      a0_0x10f4ac(-267, -108) +
-      a0_0x10f4ac(-328, -244) +
-      a0_0x10f4ac(-293, -289) +
-      a0_0x10f4ac(-251, -376) +
-      a0_0x10f4ac(-448, -356) +
-      a0_0x10f4ac(-241, -88) +
-      '5',
-    encrypt_i = 0,
-    encrypt_len = encrypt_code[a0_0x10f4ac(16, -110)];
-  encrypt_i < encrypt_len;
-  ++encrypt_i
+  var encrypt_lookup = [], encrypt_code = a0_0x10f4ac(-179, -298) + a0_0x10f4ac(-369, -279) + a0_0x10f4ac(-467, -311) + a0_0x10f4ac(-267, -108) + a0_0x10f4ac(-328, -244) + a0_0x10f4ac(-293, -289) + a0_0x10f4ac(-251, -376) + a0_0x10f4ac(-448, -356) + a0_0x10f4ac(-241, -88) + '5', encrypt_i = 0, encrypt_len = encrypt_code[a0_0x10f4ac(16, -110)]; encrypt_i < encrypt_len; ++encrypt_i
 )
   encrypt_lookup[encrypt_i] = encrypt_code[encrypt_i];
 
@@ -442,14 +429,13 @@ function encrypt_encodeUtf8(t) {
     y = m[b(477, 488)]?.(encodeURIComponent, t),
     w = [];
   function b(t, e) {
-    console.log('b params is', t, e);
     return a0_0x10f4ac(t, e - g);
   }
   for (var _ = 0; m[b(333, e)]?.(_, y?.[b(r, n)]); _++) {
     var E = y?.[b(o, 290)](_);
     if (m[b(i, a)](E, '%')) {
       var x = y?.[b(u, c)](m[b(574, 472)](_, 1)) + y?.[b(s, 290)](m[b(605, l)](_, 2)),
-        k = parse_int_default()(x, 16);
+        k = parseInt(x, 16);
       w[b(592, f)](k), (_ += 2);
     } else w[b(p, f)](E[b(217, h) + b(d, v)](0));
   }
@@ -645,10 +631,7 @@ function encrypt_encodeChunk(t, e, r) {
     return a0_0x10f4ac(t, e - m);
   }
   for (var _ = e; y[b(-63, -o)](_, r); _ += 3)
-    (n =
-      y[b(-i, -a)](y[b(-166, -124)](t[_], 16), 16711680) +
-      y[b(-u, -205)](y[b(c, -s)](t[_ + 1], 8), 65280) +
-      y[b(-l, -208)](t[y[b(-350, -f)](_, 2)], 255)),
+    n = y[b(-i, -a)](y[b(-166, -124)](t[_], 16), 16711680) + y[b(-u, -205)](y[b(c, -s)](t[_ + 1], 8), 65280) + y[b(-l, -208)](t[y[b(-350, -f)](_, 2)], 255),
       w[b(p, 73)](y[b(h, d)](encrypt_tripletToBase64, n));
   return w[b(-v, -g)]('');
 }
@@ -672,28 +655,25 @@ function encrypt_tripletToBase64(t) {
     g = {};
   function m(t, e) {
     return a0_0x10f4ac(e, t - v);
-  }
-  (g[m(205, 328)] = function (t, e) {
+  };
+  g[m(205, 328)] = function (t, e) {
     return t + e;
-  }),
-    (g[m(e, 53)] = function (t, e) {
+  },
+    g[m(e, 53)] = function (t, e) {
       return t >> e;
-    }),
-    (g[m(r, n)] = function (t, e) {
+    },
+    g[m(r, n)] = function (t, e) {
       return t & e;
-    }),
-    (g[m(o, i)] = function (t, e) {
+    },
+    g[m(o, i)] = function (t, e) {
       return t >> e;
-    }),
-    (g[m(-a, -u)] = function (t, e) {
+    },
+    g[m(-a, -u)] = function (t, e) {
       return t & e;
-    });
+    };
   var y = g;
   return (
-    y[m(c, s)](encrypt_lookup[63 & y[m(l, -75)](t, 18)], encrypt_lookup[y[m(r, f)](y[m(p, h)](t, 12), 63)]) +
-    encrypt_lookup[(t >> 6) & 63] +
-    encrypt_lookup[y[m(-a, -d)](t, 63)]
-  );
+    y[m(c, s)](encrypt_lookup[63 & y[m(l, -75)](t, 18)], encrypt_lookup[y[m(r, f)](y[m(p, h)](t, 12), 63)]) + encrypt_lookup[t >> 6 & 63] + encrypt_lookup[y[m(-a, -d)](t, 63)]);
 }
 
 const NEED_XSCOMMON_URLS = [
@@ -713,7 +693,7 @@ const NEED_XSCOMMON_URLS = [
   '/api/store/jpd/main',
 ];
 
-const js_cookie = __webpack_require__(72118), concat = __webpack_require__(60056), concat_default = __webpack_require__.n(concat), some = __webpack_require__(97397), some_default = __webpack_require__.n(some), map = __webpack_require__(21153), map_default = __webpack_require__.n(map), PULL_BLOCK_STATUS = 461, NONE_FINGERPRINT_STATUS = 462, RISK_LOGIN_STATUS = 465, RISK_SPAM_STATUS = 471, const_ORGANIZATION = "eR46sBuqF0fdw7KWFLYa", RC4_SECRET_VERSION = "1", LOCAL_ID_SECRET_VERSION = "0", RC4_SECRET_VERSION_KEY = "b1b1", LOCAL_ID_KEY = "a1", WEB_ID_KEY = "webId", GID = "gid", MINI_BROSWER_INFO_KEY = "b1", SIGN_COUNT_KEY = "sc", version = "3.6.8";
+const js_cookie = __webpack_require__(72118), concat = __webpack_require__(60056), concat_default = __webpack_require__.n(concat), some = __webpack_require__(97397), some_default = __webpack_require__.n(some), PULL_BLOCK_STATUS = 461, NONE_FINGERPRINT_STATUS = 462, RISK_LOGIN_STATUS = 465, RISK_SPAM_STATUS = 471, const_ORGANIZATION = "eR46sBuqF0fdw7KWFLYa", RC4_SECRET_VERSION = "1", LOCAL_ID_SECRET_VERSION = "0", RC4_SECRET_VERSION_KEY = "b1b1", LOCAL_ID_KEY = "a1", WEB_ID_KEY = "webId", GID = "gid", MINI_BROSWER_INFO_KEY = "b1", SIGN_COUNT_KEY = "sc", version = "3.6.8";
 
 function getSigCount(t) {
   var e = Number(sessionStorage?.getItem(SIGN_COUNT_KEY)) || 0;
@@ -722,9 +702,9 @@ function getSigCount(t) {
   e
 }
 
-var esm_typeof = __webpack_require__(9285);
+export var esm_typeof = __webpack_require__(9285);
 
-var encrypt_mcr = function(t) {
+var encrypt_mcr = function (t) {
   var e = 67
     , r = 15
     , n = 164
@@ -863,7 +843,7 @@ function xsCommon(t, e) {
         x9: encrypt_mcr(concat_default()((r = concat_default()((n = ''.concat(u))).call(n, c))).call(r, f)),
         x10: l,
       };
-    e.headers['X-S-Common'] = encrypt_b64Encode(encrypt_encodeUtf8(stringify_default()(h)));
+    e.headers['X-S-Common'] = encrypt_b64Encode(encrypt_encodeUtf8(JSON.stringify(h)));
   } catch (d) {}
   return e;
 }
@@ -872,16 +852,16 @@ var PlatformCode;
 
 function getPlatformCode(t) {
   switch (t) {
-  case "Android":
+    case 'Android':
       return PlatformCode.Android;
-  case "iOS":
+    case 'iOS':
       return PlatformCode.iOS;
-  case "Mac OS":
+    case 'Mac OS':
       return PlatformCode.MacOs;
-  case "Linux":
+    case 'Linux':
       return PlatformCode.Linux;
-  default:
-      return PlatformCode.other
+    default:
+      return PlatformCode.other;
   }
 }
 
@@ -892,8 +872,7 @@ function getPlatformCode(t) {
   t[t.MacOs = 3] = "MacOs",
   t[t.Linux = 4] = "Linux",
   t[t.other = 5] = "other"
-})(PlatformCode || (PlatformCode = {}))
-
+})(PlatformCode || (PlatformCode = {}));
 !function(t, e) {
   var r = 401
     , n = 506
@@ -920,7 +899,7 @@ function getPlatformCode(t) {
   }
   for (; ; )
       try {
-          if (400191 === parse_int_default()(E(-r, -n)) / 1 + parse_int_default()(E(-o, -i)) / 2 * (parse_int_default()(E(-a, -u)) / 3) + -parse_int_default()(E(-329, -c)) / 4 * (parse_int_default()(E(-s, -l)) / 5) + -parse_int_default()(E(-362, -f)) / 6 * (parse_int_default()(E(-p, -h)) / 7) + -parse_int_default()(E(-d, -v)) / 8 * (parse_int_default()(E(-g, -28)) / 9) + parse_int_default()(E(-m, -y)) / 10 + parse_int_default()(E(-w, -b)) / 11)
+          if (400191 === parseInt(E(-r, -n)) / 1 + parseInt(E(-o, -i)) / 2 * (parseInt(E(-a, -u)) / 3) + -parseInt(E(-329, -c)) / 4 * (parseInt(E(-s, -l)) / 5) + -parseInt(E(-362, -f)) / 6 * (parseInt(E(-p, -h)) / 7) + -parseInt(E(-d, -v)) / 8 * (parseInt(E(-g, -28)) / 9) + parseInt(E(-m, -y)) / 10 + parseInt(E(-w, -b)) / 11)
               break;
           _.push(_.shift())
       } catch (x) {
@@ -1391,4 +1370,4 @@ function encrypt_sign(t, e) {
   }
 }
 
-export const getXSCommon = () => encrypt_b64Encode(encrypt_encodeUtf8(stringify_default()(params)));
+export const getXSCommon = () => encrypt_b64Encode(encrypt_encodeUtf8(JSON.stringify(params)));
