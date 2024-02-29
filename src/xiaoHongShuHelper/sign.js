@@ -1,4 +1,6 @@
-import { MD5 } from './MD5.js';
+import { MD5 } from './MD5';
+import { __webpack_require__ } from './webpack';
+
 export function sign(window, params) {
   var r = 'A4NjFqYu5wPHsO0XTdDgMa2r1ZQocVte9UJBvk6/7=yRnhISGKblCWi+LpfE8xzm3',
     n = 'iamspam',
@@ -6,7 +8,8 @@ export function sign(window, params) {
     i = 'undefined' == typeof window ? __webpack_require__.g : window;
   void 0 !== i && i && i.navigator && i.navigator.userAgent && i.alert && (n = 'test');
   var a =
-    '[object Object]' === Object.prototype.toString.call(params) || '[object Array]' === Object.prototype.toString.call(params);
+    '[object Object]' === Object.prototype.toString.call(params) ||
+    '[object Array]' === Object.prototype.toString.call(params);
   return {
     'X-s': (function (t) {
       var e,

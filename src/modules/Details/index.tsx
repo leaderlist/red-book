@@ -8,7 +8,7 @@ export default function Details(props: any) {
 
     return () => {
       console.log('details did unmount');
-    }
+    };
   }, []);
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
