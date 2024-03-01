@@ -390,10 +390,12 @@ export function a0_0x1131() {
   })();
 }
 
-for (
-  var encrypt_lookup = [], encrypt_code = a0_0x10f4ac(-179, -298) + a0_0x10f4ac(-369, -279) + a0_0x10f4ac(-467, -311) + a0_0x10f4ac(-267, -108) + a0_0x10f4ac(-328, -244) + a0_0x10f4ac(-293, -289) + a0_0x10f4ac(-251, -376) + a0_0x10f4ac(-448, -356) + a0_0x10f4ac(-241, -88) + '5', encrypt_i = 0, encrypt_len = encrypt_code[a0_0x10f4ac(16, -110)]; encrypt_i < encrypt_len; ++encrypt_i
-)
-  encrypt_lookup[encrypt_i] = encrypt_code[encrypt_i];
+function getEnctrptLoopUp () {
+  for (
+    var encrypt_code = a0_0x10f4ac(-179, -298) + a0_0x10f4ac(-369, -279) + a0_0x10f4ac(-467, -311) + a0_0x10f4ac(-267, -108) + a0_0x10f4ac(-328, -244) + a0_0x10f4ac(-293, -289) + a0_0x10f4ac(-251, -376) + a0_0x10f4ac(-448, -356) + a0_0x10f4ac(-241, -88) + '5', encrypt_i = 0, encrypt_len = encrypt_code[a0_0x10f4ac(16, -110)]; encrypt_i < encrypt_len; ++encrypt_i
+  )
+    encrypt_lookup[encrypt_i] = encrypt_code[encrypt_i];
+}
 
 function encrypt_encodeUtf8(t) {
   var e = 185,
@@ -704,7 +706,7 @@ function getSigCount(t) {
 
 export var esm_typeof = __webpack_require__(9285);
 
-var encrypt_mcr = function (t) {
+export var encrypt_mcr = function (t) {
   var e = 67
     , r = 15
     , n = 164
@@ -850,7 +852,7 @@ function xsCommon(t, e) {
 
 var PlatformCode;
 
-function getPlatformCode(t) {
+export function getPlatformCode(t) {
   switch (t) {
     case 'Android':
       return PlatformCode.Android;
@@ -860,6 +862,8 @@ function getPlatformCode(t) {
       return PlatformCode.MacOs;
     case 'Linux':
       return PlatformCode.Linux;
+    case 'Windows':
+      return PlatformCode.Windows;
     default:
       return PlatformCode.other;
   }
@@ -873,6 +877,7 @@ function getPlatformCode(t) {
   t[t.Linux = 4] = "Linux",
   t[t.other = 5] = "other"
 })(PlatformCode || (PlatformCode = {}));
+
 !function(t, e) {
   var r = 401
     , n = 506
@@ -1370,4 +1375,9 @@ function encrypt_sign(t, e) {
   }
 }
 
-export const getXSCommon = () => encrypt_b64Encode(encrypt_encodeUtf8(JSON.stringify(params)));
+export const getXSCommon = () => {
+  if (!encrypt_lookup.length) {
+    getEnctrptLoopUp();
+  }
+  return encrypt_b64Encode(encrypt_encodeUtf8(JSON.stringify(params)));
+};

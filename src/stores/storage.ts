@@ -11,7 +11,7 @@ export const setStorage = <T>(key: string, value: T) => {
 
 export const getStorage = <T>(key: string) => {
   try {
-    return AsyncStorage.getItem(key) as Promise<T>;
+    return AsyncStorage.getItem(key) as unknown as Promise<T>;
   } catch (e) {
     ToastAndroid.show('获取数据失败，请重试', ToastAndroid.SHORT);
     console.log(e);
