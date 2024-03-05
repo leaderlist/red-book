@@ -60,48 +60,55 @@ export var encrypt_MD5 = (function (t) {
     return t[e][r(17, 91)](n[r(L, A)], n, n[r(R, I)], j), (n.l = !0), n[r(C, N)];
   }
   var D = {};
-  return (
-    (j.m = t),
-    (j.c = D),
-    (j.i = function (t) {
-      return t;
-    }),
-    (j.d = function (t, e, r) {
-      var n = 718,
-        o = {};
-      function i(t, e) {
-        return M(t, e - n);
-      }
-      (o[i(g, m) + i(y, w)] = !1),
-        (o[i(b, _) + i(671, E)] = !0),
-        (o[i(251, x)] = r),
-        j.o(t, e) || Object[i(k, T) + i(794, S)](t, e, o);
-    }),
-    (j.n = function (t) {
-      var e = 1197,
-        r =
-          t && t[n(f, p) + n(h, d)]
-            ? function () {
-                var e, r;
-                return t[F[((e = v), (r = 93), n(e, r - -960))]];
-              }
-            : function () {
-                return t;
-              };
-      function n(t, r) {
-        return M(t, r - e);
-      }
-      return j.d(r, 'a', r), r;
-    }),
-    (j.o = function (t, e) {
-      function f(t, e) {
-        return M(t, e - l);
-      }
-      return Object[f(r, n) + 'pe'][f(o, i) + f(a, u)][f(c, s)](t, e);
-    }),
-    (j.p = ''),
-    F[M(-173, -e)](j, (j.s = 4))
-  );
+  let result = () => {};
+  try {
+    result = (
+      (j.m = t),
+      (j.c = D),
+      (j.i = function (t) {
+        return t;
+      }),
+      (j.d = function (t, e, r) {
+        var n = 718,
+          o = {};
+        function i(t, e) {
+          return M(t, e - n);
+        }
+        (o[i(g, m) + i(y, w)] = !1),
+          (o[i(b, _) + i(671, E)] = !0),
+          (o[i(251, x)] = r),
+          j.o(t, e) || Object[i(k, T) + i(794, S)](t, e, o);
+      }),
+      (j.n = function (t) {
+        var e = 1197,
+          r =
+            t && t[n(f, p) + n(h, d)]
+              ? function () {
+                  var e, r;
+                  return t[F[((e = v), (r = 93), n(e, r - -960))]];
+                }
+              : function () {
+                  return t;
+                };
+        function n(t, r) {
+          return M(t, r - e);
+        }
+        return j.d(r, 'a', r), r;
+      }),
+      (j.o = function (t, e) {
+        function f(t, e) {
+          return M(t, e - l);
+        }
+        return Object[f(r, n) + 'pe'][f(o, i) + f(a, u)][f(c, s)](t, e);
+      }),
+      (j.p = ''),
+      F[M(-173, -e)](j, (j.s = 4))
+    );
+  } catch (e) {
+    console.log(e, 2222222)
+  }
+
+  return result;
 })([
   function (t, e) {
     var r,

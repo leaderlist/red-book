@@ -385,7 +385,7 @@ export const modules = {
     };
   },
   63789: function (t, e, r) {
-    console.log('some params is document & documentElement')
+    console.log('some params is document & documentElement');
     var n = r(36538),
       o = r(36031),
       i = r(88559),
@@ -430,7 +430,7 @@ export const modules = {
         };
   },
   98568: function (t) {
-    console.log('get document.all')
+    console.log('get document.all');
     var e = 'object' == typeof document && document.all,
       r = void 0 === e && void 0 !== e;
     t.exports = {
@@ -502,7 +502,7 @@ export const modules = {
   },
   36031: function (t, e, r) {
     var n = function (t) {
-      console.log('want params is window')
+      console.log('want params is window');
       return t && t.Math == Math && t;
     };
     t.exports =
@@ -1579,8 +1579,8 @@ export const modules = {
     //     return o;
     //   },
     // });
-    var o = (async function t(e, r) {
-      function o(t, o, i) {
+    var o = (function t(e, r) {
+      async function o(t, o, i) {
         console.log('use window replace document')
         if ('undefined' != typeof window) {
           'number' == typeof (i = n({}, r, i)).expires && (i.expires = new Date(Date.now() + 864e5 * i.expires)),
@@ -1604,7 +1604,9 @@ export const modules = {
             if ((!arguments.length || t)) {
               // todo,保存cookie,改变读取
               const cookies = await getCookies('https://edith.xiaohongshu.com');
-              for (var r = cookies ? cookies.split('; ') : [], n = {}, o = 0; o < r.length; o++) {
+              const cookieStr = Object.keys(cookies).map(key => `${cookies[key].name}=${cookies[key].value}`);
+              console.log(cookieStr, 'cookieStr')
+              for (var r = cookieStr || [], n = {}, o = 0; o < r.length; o++) {
                 var i = r[o].split('='),
                   a = i.slice(1).join('=');
                 try {

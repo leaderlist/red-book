@@ -8,7 +8,6 @@ import store from 'src/stores';
 import { useAppSelector } from 'src/stores/hooks';
 
 export const Welcome = () => {
-  console.log('rerender');
   const navigate = useNavigation();
   const status = useAppSelector((state) => state.user.status);
   useEffect(() => {

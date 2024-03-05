@@ -12,7 +12,7 @@ import { isNumber, isRealPhoneNumber } from 'src/utils';
 import { VerificationCodeInput } from './components/VerificationCodeInput';
 import { useAppSelector } from 'src/stores/hooks';
 import { ModelRef, ProtocolModal } from './components/ProtocalModal';
-import { login } from 'src/apis/user';
+// import { login } from 'src/apis/user';
 import { useUserInfoAction } from 'src/stores/userSlice';
 
 enum LoginWay {
@@ -71,15 +71,15 @@ export const PhoneLogin = ({ navigation }: { navigation: NavigationProps }) => {
       }
     } else {
       // 密码登录,当前接口只支持该模式
-      const params = { name: 'dagongjue', pwd: '1234565' };
-      login(params)
-        .then((res) => {
-          if (res.name) {
-            changeUserInfo(res);
-            navigation.replace('Home');
-          }
-        })
-        .catch((err) => ToastAndroid.showWithGravity(err || '登陆失败，请重试', ToastAndroid.SHORT, ToastAndroid.TOP));
+      // const params = { name: 'dagongjue', pwd: '1234565' };
+      // login(params)
+      //   .then((res) => {
+      //     if (res.name) {
+      //       changeUserInfo(res);
+      //       navigation.replace('Home');
+      //     }
+      //   })
+      //   .catch((err) => ToastAndroid.showWithGravity(err || '登陆失败，请重试', ToastAndroid.SHORT, ToastAndroid.TOP));
     }
   };
 

@@ -70,7 +70,6 @@ export default class MyFetch {
 
   async fetch(url: string, method: RequestMethods, data?: BodyInit_ | null, options?: FetchConfig) {
     const config = this.requestResolveInterceptors.reduce((prev, current) => {
-      console.log(prev, current(this.config));
       return { ...prev, ...current(this.config) };
     }, this.config);
 
@@ -99,10 +98,11 @@ export default class MyFetch {
         return currentCallback(prevResponse);
       }, response);
     } catch (error) {
-      const resultError = this.responseRejectInterceptors.reduce((prevResponse, currentCallback) => {
-        return currentCallback(prevResponse);
+      this.responseRejectInterceptors.reduce((prevResponse, currentCallback) => {
+        currentCallback(prevResponse);
+        return prevResponse;
       }, error as Error);
-      return Promise.reject(resultError);
+      return Promise.reject();
     }
   }
 

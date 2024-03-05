@@ -6,7 +6,7 @@ export const fetch = new MyFetch({
 });
 
 fetch.interceptors.request.use((config) => {
-  console.log(config, 'fetch config');
+  // console.log(config, 'fetch config');
   return config;
 });
 

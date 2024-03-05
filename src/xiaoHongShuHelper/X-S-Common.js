@@ -1,5 +1,6 @@
 import { map_default, __webpack_require__ } from './webpack';
 import { params } from './constant';
+import { encrypt_MD5 } from './encrypt_MD5';
 
 var encrypt_lookup = [],
   encrypt_len = '';
@@ -697,16 +698,16 @@ const NEED_XSCOMMON_URLS = [
 
 const js_cookie = __webpack_require__(72118), concat = __webpack_require__(60056), concat_default = __webpack_require__.n(concat), some = __webpack_require__(97397), some_default = __webpack_require__.n(some), PULL_BLOCK_STATUS = 461, NONE_FINGERPRINT_STATUS = 462, RISK_LOGIN_STATUS = 465, RISK_SPAM_STATUS = 471, const_ORGANIZATION = "eR46sBuqF0fdw7KWFLYa", RC4_SECRET_VERSION = "1", LOCAL_ID_SECRET_VERSION = "0", RC4_SECRET_VERSION_KEY = "b1b1", LOCAL_ID_KEY = "a1", WEB_ID_KEY = "webId", GID = "gid", MINI_BROSWER_INFO_KEY = "b1", SIGN_COUNT_KEY = "sc", version = "3.6.8";
 
-function getSigCount(t) {
-  var e = Number(sessionStorage?.getItem(SIGN_COUNT_KEY)) || 0;
-  return t && (e++,
-  sessionStorage?.setItem(SIGN_COUNT_KEY, e.toString())),
-  e
-}
+// function getSigCount(t) {
+//   var e = Number(sessionStorage?.getItem(SIGN_COUNT_KEY)) || 0;
+//   return t && (e++,
+//   sessionStorage?.setItem(SIGN_COUNT_KEY, e.toString())),
+//   e
+// }
 
 export var esm_typeof = __webpack_require__(9285);
 
-export var encrypt_mcr = function (t) {
+export var encrypt_mcr = (function (t) {
   var e = 67
     , r = 15
     , n = 164
@@ -749,44 +750,35 @@ export var encrypt_mcr = function (t) {
     , U = 162
     , q = {};
   function Z(t, e) {
-      return a0_0x10f4ac(e, t - U)
+      return a0_0x10f4ac(e, t - U);
   }
   q[Z(-73, -66)] = function(t, e) {
-      return t === e
-  }
-  ,
+      return t === e;
+  },
   q[Z(e, 186)] = function(t, e) {
-      return t < e
-  }
-  ,
+      return t < e;
+  },
   q[Z(-r, -n)] = function(t, e) {
-      return t ^ e
-  }
-  ,
+      return t ^ e;
+  },
   q[Z(r, -o)] = function(t, e) {
-      return t & e
-  }
-  ,
+      return t & e;
+  },
   q[Z(-i, -a)] = function(t, e) {
-      return t < e
-  }
-  ,
+      return t < e;
+  },
   q[Z(-175, -u)] = function(t, e) {
-      return t ^ e
-  }
-  ,
+      return t ^ e;
+  },
   q[Z(-59, c)] = function(t, e) {
-      return t ^ e
-  }
-  ,
+      return t ^ e;
+  },
   q[Z(-s, -l)] = function(t, e) {
-      return t >>> e
-  }
-  ,
+      return t >>> e;
+  },
   q[Z(f, p)] = function(t, e) {
-      return t >>> e
-  }
-  ;
+      return t >>> e;
+  };
   for (var G, H, V = q, Y = 3988292384, W = 256, z = []; W--; z[W] = V[Z(h, -66)](G, 0))
       for (H = 8,
       G = W; H--; )
@@ -794,6 +786,13 @@ export var encrypt_mcr = function (t) {
   return function(t) {
       function e(t, e) {
           return Z(e - 1181, t)
+      }
+      if (typeof V[e(m, 1108)] !== 'function') {
+        console.log('m', m, 'e(m, 1108)', e(m, 1108), 'V[e(m, 1108)]', V[e(m, 1108)], t);
+      }
+
+      if (typeof V[e(R, 1044)] !== 'function') {
+        console.log('m', R, 'e(R, 1044)', e(R, 1044), 'V[e(R, 1044)]', V[e(R, 1044)], e);
       }
       if (V[e(m, 1108)]((0,
       esm_typeof.Z)(t), e(y, 914))) {
@@ -806,51 +805,53 @@ export var encrypt_mcr = function (t) {
           n = V[e(N, P)](z[V[e(1229, B)](V[e(F, T)](n, 255), t[r])], V[e(M, 1125)](n, 8));
       return V[e(j, B)](V[e(D, 1122)](n, -1), Y)
   }
-}();
+})();
 
-function xsCommon(t, e) {
-  try {
-    var r,
-      n,
-      o = t.platform,
-      i = e.url,
-      a = map_default()(NEED_XSCOMMON_URLS).call(NEED_XSCOMMON_URLS, function (t) {
-        return new RegExp(t);
-      });
-    if (
-      !some_default()(a).call(a, function (t) {
-        return t.test(i);
-      })
-    )
-      return e;
-    var u = e.headers['X-t'] || '',
-      c = e.headers['X-s'] || '',
-      s = e.headers['X-Sign'] || '',
-      l = getSigCount((u && c) || s),
-      f = localStorage.getItem(MINI_BROSWER_INFO_KEY),
-      p = localStorage.getItem(RC4_SECRET_VERSION_KEY) || RC4_SECRET_VERSION,
-      h = {
-        s0: getPlatformCode(o), // Android
-        s1: '',
-        // todo,修改storage读取方式，找到setItem的地方
-        x0: p, // localStorage.getItem(RC4_SECRET_VERSION_KEY) || RC4_SECRET_VERSION
-        x1: version, // 目前是3.6.8
-        x2: o || 'PC', // 尝试改成Android
-        x3: 'xhs-pc-web', // 尝试改成 'xhs-mobile-android'
-        x4: '4.2.5',
-        x5: js_cookie.Z.get(LOCAL_ID_KEY),
-        x6: u, // X-t
-        x7: c, // X-s
-        x8: f, // localStorage.getItem(MINI_BROSWER_INFO_KEY)
-        x9: encrypt_mcr(concat_default()((r = concat_default()((n = ''.concat(u))).call(n, c))).call(r, f)),
-        x10: l,
-      };
-    e.headers['X-S-Common'] = encrypt_b64Encode(encrypt_encodeUtf8(JSON.stringify(h)));
-  } catch (d) {}
-  return e;
-}
+// function xsCommon(t, e) {
+//   try {
+//     var r,
+//       n,
+//       o = t.platform,
+//       i = e.url,
+//       a = map_default()(NEED_XSCOMMON_URLS).call(NEED_XSCOMMON_URLS, function (t) {
+//         return new RegExp(t);
+//       });
+//     if (
+//       !some_default()(a).call(a, function (t) {
+//         return t.test(i);
+//       })
+//     )
+//       return e;
+//     var u = e.headers['X-t'] || '',
+//       c = e.headers['X-s'] || '',
+//       s = e.headers['X-Sign'] || '',
+//       l = getSigCount((u && c) || s),
+//       f = localStorage.getItem(MINI_BROSWER_INFO_KEY),
+//       p = localStorage.getItem(RC4_SECRET_VERSION_KEY) || RC4_SECRET_VERSION,
+//       h = {
+//         s0: getPlatformCode(o), // Android
+//         s1: '',
+//         // todo,修改storage读取方式，找到setItem的地方
+//         x0: p, // localStorage.getItem(RC4_SECRET_VERSION_KEY) || RC4_SECRET_VERSION
+//         x1: version, // 目前是3.6.8
+//         x2: o || 'PC', // 尝试改成Android
+//         x3: 'xhs-pc-web', // 尝试改成 'xhs-mobile-android'
+//         x4: '4.2.5',
+//         x5: js_cookie.Z.get(LOCAL_ID_KEY),
+//         x6: u, // X-t
+//         x7: c, // X-s
+//         x8: f, // localStorage.getItem(MINI_BROSWER_INFO_KEY)
+//         x9: encrypt_mcr(concat_default()((r = concat_default()((n = ''.concat(u))).call(n, c))).call(r, f)),
+//         x10: l,
+//       };
+//     e.headers['X-S-Common'] = encrypt_b64Encode(encrypt_encodeUtf8(JSON.stringify(h)));
+//   } catch (d) {}
+//   return e;
+// }
 
 var PlatformCode;
+
+var Nr;
 
 export function getPlatformCode(t) {
   switch (t) {
@@ -878,7 +879,7 @@ export function getPlatformCode(t) {
   t[t.other = 5] = "other"
 })(PlatformCode || (PlatformCode = {}));
 
-!function(t, e) {
+!(function (t, e) {
   var r = 401
     , n = 506
     , o = 337
@@ -910,10 +911,46 @@ export function getPlatformCode(t) {
       } catch (x) {
           _.push(_.shift())
       }
-}(a0_0x1131);
+})(a0_0x1131);
+
+export function initParams() {
+  !(function (t, e) {
+    var r = 401
+      , n = 506
+      , o = 337
+      , i = 281
+      , a = 460
+      , u = 347
+      , c = 346
+      , s = 432
+      , l = 614
+      , f = 518
+      , p = 338
+      , h = 301
+      , d = 226
+      , v = 144
+      , g = 151
+      , m = 293
+      , y = 112
+      , w = 256
+      , b = 190
+      , _ = t();
+    function E(t, e) {
+        return a0_0x3693(t - -627, e)
+    }
+    for (; ; )
+        try {
+            if (400191 === parseInt(E(-r, -n)) / 1 + parseInt(E(-o, -i)) / 2 * (parseInt(E(-a, -u)) / 3) + -parseInt(E(-329, -c)) / 4 * (parseInt(E(-s, -l)) / 5) + -parseInt(E(-362, -f)) / 6 * (parseInt(E(-p, -h)) / 7) + -parseInt(E(-d, -v)) / 8 * (parseInt(E(-g, -28)) / 9) + parseInt(E(-m, -y)) / 10 + parseInt(E(-w, -b)) / 11)
+                break;
+            _.push(_.shift())
+        } catch (x) {
+            _.push(_.shift())
+        }
+  })(a0_0x1131);
+}
 
 var esm_typeof = __webpack_require__(9285);
-function encrypt_sign(t, e) {
+export function encrypt_sign(t, e) {
   var r = 279
     , n = 151
     , o = 325
@@ -1160,15 +1197,21 @@ function encrypt_sign(t, e) {
   function Sr(t, e) {
       return a0_0x10f4ac(e, t - -kr)
   }
+
   for (var Lr = Tr[Sr(-343, -B)][Sr(-E, -F)]("|"), Or = 0; ; ) {
       switch (Lr[Or++]) {
       case "0":
+         console.log('0');
+         const params = [Cr, Pr, t, Br ? JSON[Sr(-q, -Z) + "fy"](e) : ""][Sr(-G, -H)]("");
+         console.log(Tr, Sr(-M, -j), Nr, Sr(-D, -U), Nr(encrypt_MD5(params)));
+         // {}, tzzOB [Function Nr] tzzOB  [1709380725244, "iamspam", "/api/sns/web/v1/login/activate", ""] join
           return {
-              "X-s": Tr[Sr(-M, -j)](Nr, Tr[Sr(-D, -U)](encrypt_MD5, [Cr, Pr, t, Br ? JSON[Sr(-q, -Z) + "fy"](e) : ""][Sr(-G, -H)](""))),
-              "X-t": Cr
+            "X-s": Tr[Sr(-M, -j)](Nr, Tr[Sr(-D, -U)](encrypt_MD5, [Cr, Pr, t, Br ? JSON[Sr(-q, -Z) + "fy"](e) : ""][Sr(-G, -H)](""))),
+            "X-t": Cr
           };
       case "1":
-          var Ar = function(t) {
+         console.log('1');
+         var Ar = function(t) {
               t = t[o(-Ze, -661)](/\r\n/g, "\n");
               for (var e = "", r = 0; r < t[o(-Ge, -He)]; r++) {
                   var n = t[o(-515, -Ve) + o(-678, -Ye)](r);
@@ -1184,21 +1227,26 @@ function encrypt_sign(t, e) {
           };
           continue;
       case "2":
-          Tr[Sr(-459, -V)]((0,
+         console.log('2');
+         Tr[Sr(-459, -V)]((0,
           esm_typeof.Z)(Rr), Tr[Sr(-368, -Y)]) && Rr && Rr[Sr(-369, -W) + "or"] && Rr[Sr(-z, -401) + "or"][Sr(-346, -X) + "nt"] && Rr[Sr(-K, -J)] && (Pr = Tr[Sr(-$, -Q)]);
           continue;
       case "3":
-          var Rr = ("undefined" == typeof window ? "undefined" : (0,
+         console.log('3');
+         var Rr = ("undefined" == typeof window ? "undefined" : (0,
           esm_typeof.Z)(window)) === Tr[Sr(-tt, -511)] ? __webpack_require__.g : window;
           continue;
       case "4":
-          var Ir = Tr[Sr(-et, -rt)];
+         console.log('4');
+         var Ir = Tr[Sr(-et, -rt)];
           continue;
       case "5":
-          var Cr = (new Date)[Sr(-nt, -261)]();
+         console.log('5');
+         var Cr = (new Date)[Sr(-nt, -261)]();
           continue;
       case "6":
-          var Nr = function(t) {
+         console.log('6');
+         Nr = function(t) {
               var e = Fr[r(-ne, -598)][r(-oe, -ie)]("|");
               function r(t, e) {
                   return Sr(e - -231, t)
@@ -1260,7 +1308,8 @@ function encrypt_sign(t, e) {
           };
           continue;
       case "7":
-          var Pr = Tr[Sr(-ot, -it)];
+         console.log('7');
+         var Pr = Tr[Sr(-ot, -it)];
           continue;
       case "8":
           var Br = Tr[Sr(-at, -ut)](Object[Sr(-ct, -st) + "pe"][Sr(-358, -lt) + "g"][Sr(-419, -ft)](e), Tr[Sr(-pt, -ht)]) || Object[Sr(-dt, -500) + "pe"][Sr(-vt, -gt) + "g"][Sr(-mt, -yt)](e) === Tr[Sr(-wt, -138)];
@@ -1375,7 +1424,7 @@ function encrypt_sign(t, e) {
   }
 }
 
-export const getXSCommon = () => {
+export const getXSCommon = (params) => {
   if (!encrypt_lookup.length) {
     getEnctrptLoopUp();
   }

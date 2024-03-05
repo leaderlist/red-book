@@ -24,9 +24,7 @@ const initialState: { userInfo: LoginResponse; status: Status } = {
 };
 
 export const checkUserInfo = createAsyncThunk('user/checkUserInfo', async () => {
-  console.log(2222);
   const res = await getStorage<LoginResponse>(USER_INFO_STORAGE_KEY);
-  console.log(res);
   return res;
 });
 

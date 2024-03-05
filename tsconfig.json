@@ -16,5 +16,5 @@
     "resolveJsonModule": true,
     "moduleResolution": "node"
   },
-  "include": ["src", "global.d.ts", "global.d.ts"]
+  "include": ["src", "global.d.ts", "global.d.ts", "init.ts"]
 }
