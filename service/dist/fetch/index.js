@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.post = void 0;
 const axios_1 = require("axios");
 const qs_1 = require("qs");
-axios_1.default;
 const fetch = axios_1.default.create({
-    baseURL: '',
+    baseURL: 'https://edith.xiaohongshu.com',
     timeout: 10000,
     withCredentials: false,
 });
 const serverConfig = {
-    baseURL: 'https://edith.xiaohongshu.com/',
-    useTokenAuthorization: true,
+    baseURL: 'https://edith.xiaohongshu.com',
+    useTokenAuthorization: false,
 };
 fetch.interceptors.request.use((config) => {
     if (serverConfig.useTokenAuthorization) {
@@ -84,4 +84,9 @@ fetch.interceptors.response.use((res) => {
     return Promise.reject(message);
 });
 exports.default = fetch;
+const post = (url, data, options) => {
+    console.log(options);
+    return fetch.post(url, data, options);
+};
+exports.post = post;
 //# sourceMappingURL=index.js.map

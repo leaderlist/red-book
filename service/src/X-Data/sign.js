@@ -1,7 +1,7 @@
-import { MD5 } from './MD5';
-import { __webpack_require__ } from './webpack';
+const { MD5 } = require('./MD5');
+const { __webpack_require__ } = require('./webpack');
 
-export function sign(window, params) {
+function sign(window, params) {
   var r = 'A4NjFqYu5wPHsO0XTdDgMa2r1ZQocVte9UJBvk6/7=yRnhISGKblCWi+LpfE8xzm3',
     n = 'iamspam',
     o = new Date().getTime(),
@@ -49,4 +49,8 @@ export function sign(window, params) {
     })(MD5([o, n, window, a ? JSON.stringify(params) : ''].join(''))),
     'X-t': o,
   };
+}
+
+module.exports = {
+  sign,
 }

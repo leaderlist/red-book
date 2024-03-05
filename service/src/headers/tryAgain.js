@@ -24,6 +24,7 @@ function Sanji() {
     , _ace_c9a41 = 0
     , _ace_e36bd = !!_ace_a72ba
     , _ace_512 = !!_ace_c9a41;
+    console.log(window.document.cookie);
   return function(_ace_4752e, _ace_aa949, _ace_be07c) {
       var _ace_a3718 = []
         , _ace_9750 = []

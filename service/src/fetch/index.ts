@@ -1,16 +1,15 @@
 import axios from 'axios';
 import qs from 'qs';
 
-axios;
 const fetch = axios.create({
-  baseURL: '', // 基础请求地址
+  baseURL: 'https://edith.xiaohongshu.com', // 基础请求地址
   timeout: 10000, // 请求超时设置
   withCredentials: false, // 跨域请求是否需要携带 cookie
 });
 
 const serverConfig = {
-  baseURL: 'https://edith.xiaohongshu.com/', // 请求基础地址,可根据环境自定义
-  useTokenAuthorization: true, // 是否开启 token 认证
+  baseURL: 'https://edith.xiaohongshu.com', // 请求基础地址,可根据环境自定义
+  useTokenAuthorization: false, // 是否开启 token 认证
 };
 
 // 创建请求拦截
@@ -98,4 +97,11 @@ fetch.interceptors.response.use(
   },
 );
 
+
+
 export default fetch;
+
+export const post = (url: string, data?: any, options?: any ) => {
+  console.log(options);
+  return fetch.post(url, data, options);
+}

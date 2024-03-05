@@ -25,6 +25,8 @@
     "@nestjs/platform-express": "^10.0.0",
     "@types/jsdom": "^21.1.6",
     "axios": "^1.6.7",
+    "canvas": "^2.11.2",
+    "dom-storage": "^2.1.0",
     "jsdon": "^0.2.3",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1"

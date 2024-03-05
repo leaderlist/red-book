@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.params = void 0;
-exports.params = {
+const params = {
     s0: 5,
     s1: '',
     x0: '1',
@@ -16,4 +13,5 @@ exports.params = {
     x9: 405136369,
     x10: 359,
 };
+module.exports.params = params;
 //# sourceMappingURL=constant.js.map

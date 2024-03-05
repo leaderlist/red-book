@@ -1,4 +1,4 @@
-export const MD5 = (function (t) {
+const MD5 = (function (t) {
   function e(n) {
     if (r[n]) return r[n].exports;
     var o = (r[n] = {
@@ -270,3 +270,7 @@ export const MD5 = (function (t) {
     t.exports = r(1);
   },
 ]);
+
+module.exports = {
+  MD5,
+}
