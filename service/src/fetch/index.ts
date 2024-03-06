@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { MyResponseType } from 'src/type/fetch';
 
 const fetch = axios.create({
@@ -82,13 +82,13 @@ export const getFetch = <T, D>(
   params?: T,
   options?: AxiosRequestConfig,
 ) => {
-  return fetch.get<D>(url, { params, ...options });
+  return fetch.get<D, D, T>(url, { params, ...options });
 };
 
 export const postFetch = <T, D extends MyResponseType>(
   url: string,
-  body?: T,
+  data?: T,
   options?: AxiosRequestConfig,
-) => fetch.post<D, D>(url, body, options);
+) => fetch.post<D, D>(url, data, options);
 
 export default fetch;

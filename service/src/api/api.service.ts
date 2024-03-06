@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { BASE_URL, defaultCookieFailedRes, defaultHeaderFailedRes, defaultRes } from 'src/constants/service';
 import { getFetch, postFetch } from 'src/fetch';
 import { getEncryptData } from 'src/service/snsWebV1/login';
-import { CheckCodeRequest, SendCodeResponse, SendCodeRequest, ActiveRes, MyResponseType, CheckCodeResponse, LoginCodeRequest, ActivateResponse } from 'src/type/fetch';
+import { CheckCodeRequest, SendCodeResponse, SendCodeRequest, ActiveRes, MyResponseType, CheckCodeResponse, LoginCodeRequest, ActivateResponse, LoginCodeResponse } from 'src/type/fetch';
 import { formatHeader } from 'src/utils';
 
 @Injectable()
@@ -53,6 +53,7 @@ export class ApiService {
 
   async checkCode(url: string, params: CheckCodeRequest) {
     const encryptData = await getEncryptData(url);
+    console.log(encryptData)
     let resData: SendCodeResponse = defaultRes;
     if (encryptData && encryptData.cookie) {
       const result = await getFetch<CheckCodeRequest, CheckCodeResponse>(
@@ -68,6 +69,27 @@ export class ApiService {
   }
 
   async loginCode(url: string, data: LoginCodeRequest) {
-
+    console.log(url, data);
+    const encryptData = await getEncryptData(url, data);
+    let resData: SendCodeResponse | void = defaultRes;
+    console.log(encryptData)
+    try {
+      if (encryptData && encryptData.cookie) {
+        const result = await postFetch<LoginCodeRequest, LoginCodeResponse>(
+          `${BASE_URL}/api/sns/web/v2/login/code`,
+          data,
+          { headers: { ...formatHeader(encryptData), 'Content-Type': 'application/json' } }
+        ).then(res => {
+          console.log(res);
+          return res;
+        }).catch(e => console.log(e, 44444));
+        resData = result;
+      } else {
+        resData = encryptData.cookie ? defaultHeaderFailedRes : defaultCookieFailedRes;
+      }
+    } catch (error) {
+      console.log(error, 2222);
+    }
+    return resData;
   }
 }

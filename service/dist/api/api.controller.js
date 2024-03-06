@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ApiController = void 0;
 const common_1 = require("@nestjs/common");
@@ -33,6 +32,7 @@ let ApiController = class ApiController {
         return this.apiService.checkCode(req.url, { phone, zone, code });
     }
     async loginCode(req) {
+        console.log(req.body);
         return this.apiService.loginCode(req.url, { mobile_token: req.body.mobile_token, phone: req.body.phone, zone: req.body.zone });
     }
 };
@@ -44,7 +44,7 @@ __decorate([
     __param(2, (0, common_1.Query)('zone')),
     __param(3, (0, common_1.Query)('type')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Number, Number, typeof (_a = typeof fetch_1.SendType !== "undefined" && fetch_1.SendType) === "function" ? _a : Object]),
+    __metadata("design:paramtypes", [Object, Number, Number, String]),
     __metadata("design:returntype", Promise)
 ], ApiController.prototype, "sendCode", null);
 __decorate([

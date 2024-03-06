@@ -1,1 +1,2 @@
-export declare const getActivateReq: (url: string) => Promise<string>;
+import { XHeaderData } from 'src/type';
+export declare const getEncryptData: (url: string, params?: any) => Promise<XHeaderData>;

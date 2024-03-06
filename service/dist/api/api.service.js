@@ -52,6 +52,7 @@ let ApiService = class ApiService {
     }
     async checkCode(url, params) {
         const encryptData = await (0, login_1.getEncryptData)(url);
+        console.log(encryptData);
         let resData = service_1.defaultRes;
         if (encryptData && encryptData.cookie) {
             const result = await (0, fetch_1.getFetch)(`${service_1.BASE_URL}/api/sns/web/v1/login/check_code`, params, { headers: (0, utils_1.formatHeader)(encryptData) });
@@ -63,6 +64,26 @@ let ApiService = class ApiService {
         return resData;
     }
     async loginCode(url, data) {
+        console.log(url, data);
+        const encryptData = await (0, login_1.getEncryptData)(url, data);
+        let resData = service_1.defaultRes;
+        console.log(encryptData);
+        try {
+            if (encryptData && encryptData.cookie) {
+                const result = await (0, fetch_1.postFetch)(`${service_1.BASE_URL}/api/sns/web/v2/login/code`, data, { headers: { ...(0, utils_1.formatHeader)(encryptData), 'Content-Type': 'application/json' } }).then(res => {
+                    console.log(res);
+                    return res;
+                }).catch(e => console.log(e, 44444));
+                resData = result;
+            }
+            else {
+                resData = encryptData.cookie ? service_1.defaultHeaderFailedRes : service_1.defaultCookieFailedRes;
+            }
+        }
+        catch (error) {
+            console.log(error, 2222);
+        }
+        return resData;
     }
 };
 exports.ApiService = ApiService;

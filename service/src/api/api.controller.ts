@@ -27,6 +27,7 @@ export class ApiController {
 
   @Post('v2/login/code')
   async loginCode(@Req() req: Request) {
+    console.log(req.body);
     return this.apiService.loginCode(req.url, { mobile_token: req.body.mobile_token, phone: req.body.phone, zone: req.body.zone });
   }
 }

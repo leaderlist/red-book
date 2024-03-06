@@ -69,7 +69,7 @@ const getFetch = (url, params, options) => {
     return fetch.get(url, { params, ...options });
 };
 exports.getFetch = getFetch;
-const postFetch = (url, body, options) => fetch.post(url, body, options);
+const postFetch = (url, data, options) => fetch.post(url, data, options);
 exports.postFetch = postFetch;
 exports.default = fetch;
 //# sourceMappingURL=index.js.map
