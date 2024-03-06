@@ -15,8 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
-const shell_1 = require("./shell");
-const axios_1 = require("axios");
+const request_1 = require("./controller/request");
 let AppController = class AppController {
     constructor(appService) {
         this.appService = appService;
@@ -25,48 +24,8 @@ let AppController = class AppController {
         return this.appService.getHello();
     }
     async activate(req) {
-        console.time('start handle fetch');
-        const url = '/api/sns/web/v1/login/activate';
-        const command = `node -e "require('./src/headers/index.js').getXHeader('${url}')"`;
-        const res = await (0, shell_1.executeCommand)(command);
-        let responseData = { code: 0, success: true, msg: '成功', data: null };
-        if (res) {
-            const xHeaderData = JSON.parse(res);
-            if (!xHeaderData.cookie) {
-                responseData = { code: -1, success: false, msg: '失败，cookie值无效', data: null };
-            }
-            else {
-                console.timeEnd('start handle fetch');
-                console.time('start fetch');
-                const result = axios_1.default.post(`https://edith.xiaohongshu.com/api/sns/web/v1/login/activate`, {}, {
-                    headers: {
-                        'x-t': xHeaderData['X-t'] + '',
-                        'x-s': xHeaderData['X-s'],
-                        'x-s-common': xHeaderData['X-s-common'],
-                        cookie: `a1=${xHeaderData.cookie};`,
-                        'content-type': 'application/json;charset=UTF-8',
-                    }
-                }).then(async (res) => {
-                    console.timeEnd('start fetch');
-                    console.log(res.data);
-                    return res;
-                }).catch(err => console.log(err, 2222));
-                responseData = {
-                    code: 0,
-                    success: true,
-                    msg: '成功',
-                    data: {
-                        user_id: '65e1db6100000000030264f7',
-                        session: '030037a2d28f156a2180a6ab9b224aefe30447',
-                        secure_session: 'Xbdbd0session.030037a2d28f156a2180a6ab9b224aefe30447',
-                    }
-                };
-            }
-        }
-        else {
-            responseData = { code: -1, success: false, msg: '失败，获取X Header失败', data: null, };
-        }
-        return responseData;
+        const result = await (0, request_1.handleActivateReq)(req.url);
+        return result;
     }
 };
 exports.AppController = AppController;

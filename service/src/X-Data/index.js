@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const {
   getXSCommon,
   encrypt_sign,
@@ -11,8 +12,6 @@ const {
   generateLocalId,
 } = require('./X-S-Common');
 const { window, HTMLCanvasElement, document } = require('./Window');
-const { params } = require('./constant');
-const { MD5 } = require('./MD5');
 const {
   slice,
   slice_default,
@@ -48,6 +47,4 @@ module.exports = {
   window,
   HTMLCanvasElement,
   document,
-  params,
-  MD5,
-}
+};

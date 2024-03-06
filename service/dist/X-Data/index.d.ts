@@ -20,6 +20,4 @@ import { __webpack_require__ } from "./webpack";
 import { window } from "./Window";
 import { HTMLCanvasElement } from "./Window";
 import { document } from "./Window";
-import { params } from "./constant";
-import { MD5 } from "./MD5";
-export { getXSCommon, encrypt_sign, a0_0x10f4ac, a0_0x3693, a0_0x1131, esm_typeof, encrypt_mcr, getPlatformCode, initParams, generateLocalId, slice, slice_default, is_array_default, parse_int_default, index_of_default, define_property_default, stringify_default, map_default, __webpack_require__, window, HTMLCanvasElement, document, params, MD5 };
+export { getXSCommon, encrypt_sign, a0_0x10f4ac, a0_0x3693, a0_0x1131, esm_typeof, encrypt_mcr, getPlatformCode, initParams, generateLocalId, slice, slice_default, is_array_default, parse_int_default, index_of_default, define_property_default, stringify_default, map_default, __webpack_require__, window, HTMLCanvasElement, document };

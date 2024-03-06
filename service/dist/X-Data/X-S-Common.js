@@ -1,17 +1,17 @@
 const { window, HTMLCanvasElement, document, } = require('./Window');
 const { __webpack_require__, map_default } = require('./webpack');
 const CHARSET = 'abcdefghijklmnopqrstuvwxyz1234567890';
-const concat = __webpack_require__(60056), concat_default = __webpack_require__.n(concat), some = __webpack_require__(97397), some_default = __webpack_require__.n(some), PULL_BLOCK_STATUS = 461, NONE_FINGERPRINT_STATUS = 462, RISK_LOGIN_STATUS = 465, RISK_SPAM_STATUS = 471, const_ORGANIZATION = "eR46sBuqF0fdw7KWFLYa", RC4_SECRET_VERSION = "1", LOCAL_ID_SECRET_VERSION = "0", RC4_SECRET_VERSION_KEY = "b1b1", LOCAL_ID_KEY = "a1", WEB_ID_KEY = "webId", GID = "gid", MINI_BROSWER_INFO_KEY = "b1", SIGN_COUNT_KEY = "sc", version = "3.6.8";
+const concat = __webpack_require__(60056), concat_default = __webpack_require__.n(concat), LOCAL_ID_SECRET_VERSION = '0';
 var encrypt_lookup = [];
 let isDone = false;
 var PlatformCode;
 (function getPlatForm(t) {
-    t[t.Windows = 0] = "Windows",
-        t[t.iOS = 1] = "iOS",
-        t[t.Android = 2] = "Android",
-        t[t.MacOs = 3] = "MacOs",
-        t[t.Linux = 4] = "Linux",
-        t[t.other = 5] = "other";
+    (t[(t.Windows = 0)] = 'Windows'),
+        (t[(t.iOS = 1)] = 'iOS)'),
+        (t[(t.Android = 2)] = 'Android'),
+        (t[(t.MacOs = 3)] = 'MacOs'),
+        (t[(t.Linux = 4)] = 'Linux'),
+        (t[(t.other = 5)] = 'other');
 })(PlatformCode || (PlatformCode = {}));
 function a0_0x10f4ac(t, e) {
     return a0_0x3693(e - -570, t);

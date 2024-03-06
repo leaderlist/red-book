@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { JSDOM } = require('jsdom');
 const Storage = require('dom-storage');
 

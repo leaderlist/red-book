@@ -1,31 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.post = void 0;
+exports.postFetch = exports.getFetch = void 0;
 const axios_1 = require("axios");
-const qs_1 = require("qs");
 const fetch = axios_1.default.create({
     baseURL: 'https://edith.xiaohongshu.com',
     timeout: 10000,
     withCredentials: false,
 });
-const serverConfig = {
-    baseURL: 'https://edith.xiaohongshu.com',
-    useTokenAuthorization: false,
-};
 fetch.interceptors.request.use((config) => {
-    if (serverConfig.useTokenAuthorization) {
-        config.headers['Authorization'] = localStorage.getItem('token');
-    }
-    if (!config.headers['content-type']) {
-        if (config.method === 'post') {
-            config.headers['content-type'] = 'application/x-www-form-urlencoded';
-            config.data = qs_1.default.stringify(config.data);
-        }
-        else {
-            config.headers['content-type'] = 'application/json';
-        }
-    }
-    console.log('请求配置', config);
     return config;
 }, (error) => {
     Promise.reject(error);
@@ -83,10 +65,11 @@ fetch.interceptors.response.use((res) => {
     }
     return Promise.reject(message);
 });
-exports.default = fetch;
-const post = (url, data, options) => {
-    console.log(options);
-    return fetch.post(url, data, options);
+const getFetch = (url, params, options) => {
+    return fetch.get(url, { params, ...options });
 };
-exports.post = post;
+exports.getFetch = getFetch;
+const postFetch = (url, body, options) => fetch.post(url, body, options);
+exports.postFetch = postFetch;
+exports.default = fetch;
 //# sourceMappingURL=index.js.map

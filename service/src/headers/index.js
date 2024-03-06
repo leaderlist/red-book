@@ -1,13 +1,7 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { generateLocalId, getXSCommon } = require('../X-Data/X-S-Common');
 const { window, document } = require('../X-Data/Window');
-// var Storage = require ('dom-storage');
-// import Storage from 'dom-storage';
-// import { generateLocalId, window, document } from '../X-Data';
-const { RC4_SECRET_VERSION_KEY, MINI_BROSWER_INFO_KEY, INIT_STORAGE_VALUES } = require('./constants');
-const { getSignParams , initLocalStorage } = require('./getSignParams');
-// import { RC4_SECRET_VERSION_KEY, MINI_BROSWER_INFO_KEY, INIT_STORAGE_VALUES } from './constants';
-// import { getSignParams , initLocalStorage } from './getSignParams';
-
+const { getSignParams, initLocalStorage } = require('./getSignParams');
 var HTMLCanvasElement = window.HTMLCanvasElement;
 
 HTMLCanvasElement.prototype.getContext = function () {
@@ -567,8 +561,7 @@ const getXHeader = async(url) => {
     'X-s-common': xSCommon,
     cookie: window.document.cookie.split(';')?.find(item => item.includes('a1'))?.split('=')[1],
   };
-  console.log(JSON.stringify(result));
-  return window._webmsxyw(url);
+  return result;
 }
 
 module.exports = {

@@ -1,5 +1,5 @@
-import axios from 'axios';
-import qs from 'qs';
+import axios, { AxiosRequestConfig } from 'axios';
+import { MyResponseType } from 'src/type/fetch';
 
 const fetch = axios.create({
   baseURL: 'https://edith.xiaohongshu.com', // 基础请求地址
@@ -7,29 +7,9 @@ const fetch = axios.create({
   withCredentials: false, // 跨域请求是否需要携带 cookie
 });
 
-const serverConfig = {
-  baseURL: 'https://edith.xiaohongshu.com', // 请求基础地址,可根据环境自定义
-  useTokenAuthorization: false, // 是否开启 token 认证
-};
-
 // 创建请求拦截
 fetch.interceptors.request.use(
   (config) => {
-    // 如果开启 token 认证
-    if (serverConfig.useTokenAuthorization) {
-      config.headers['Authorization'] = localStorage.getItem('token'); // 请求头携带 token
-    }
-    // 设置请求头
-    if (!config.headers['content-type']) {
-      // 如果没有设置请求头
-      if (config.method === 'post') {
-        config.headers['content-type'] = 'application/x-www-form-urlencoded'; // post 请求
-        config.data = qs.stringify(config.data); // 序列化,比如表单数据
-      } else {
-        config.headers['content-type'] = 'application/json'; // 默认类型
-      }
-    }
-    console.log('请求配置', config);
     return config;
   },
   (error) => {
@@ -97,11 +77,18 @@ fetch.interceptors.response.use(
   },
 );
 
+export const getFetch = <T, D>(
+  url: string,
+  params?: T,
+  options?: AxiosRequestConfig,
+) => {
+  return fetch.get<D>(url, { params, ...options });
+};
 
+export const postFetch = <T, D extends MyResponseType>(
+  url: string,
+  body?: T,
+  options?: AxiosRequestConfig,
+) => fetch.post<D, D>(url, body, options);
 
 export default fetch;
-
-export const post = (url: string, data?: any, options?: any ) => {
-  console.log(options);
-  return fetch.post(url, data, options);
-}

@@ -1,0 +1,1 @@
+// export const ACTIVATE_URL = '/api/sns/web/v1/login/activate',
