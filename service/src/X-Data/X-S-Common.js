@@ -13,6 +13,8 @@ const concat = __webpack_require__(60056),
 
 var encrypt_lookup = [];
 
+const localStorage = window.localStorage;
+
 let isDone = false;
 
 var PlatformCode;
@@ -2860,4 +2862,5 @@ module.exports = {
   getPlatformCode,
   initParams,
   generateLocalId,
+  encrypt_MD5,
 }

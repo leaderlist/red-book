@@ -4,4 +4,5 @@ export class HTMLCanvasElement {
     getContext(): {};
 }
 export const document: Document;
+export function initLocalStorage(): void;
 import jsdom = require("jsdom");

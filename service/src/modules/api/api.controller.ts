@@ -62,6 +62,6 @@ export class ApiController {
 
   @Post('v1/homefeed')
   async getHomeFeed(@Req() req: Request, @Body() body: GetHomeFeedRequest) {
-    return this.apiService.getHomeFeed(req.url, body);
+    return this.apiService.getHomeFeed(req.url, body, req.headers);
   }
 }

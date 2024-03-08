@@ -1,4 +1,3 @@
-export function initLocalStorage(): void;
 export function getSignParams(headers: any): Promise<{
     s0: any;
     s1: string;

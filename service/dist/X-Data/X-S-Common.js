@@ -3,6 +3,7 @@ const { __webpack_require__, map_default } = require('./webpack');
 const CHARSET = 'abcdefghijklmnopqrstuvwxyz1234567890';
 const concat = __webpack_require__(60056), concat_default = __webpack_require__.n(concat), LOCAL_ID_SECRET_VERSION = '0';
 var encrypt_lookup = [];
+const localStorage = window.localStorage;
 let isDone = false;
 var PlatformCode;
 (function getPlatForm(t) {
@@ -1924,5 +1925,6 @@ module.exports = {
     getPlatformCode,
     initParams,
     generateLocalId,
+    encrypt_MD5,
 };
 //# sourceMappingURL=X-S-Common.js.map

@@ -10,6 +10,7 @@ const {
   getPlatformCode,
   initParams,
   generateLocalId,
+  encrypt_MD5,
 } = require('./X-S-Common');
 const { window, HTMLCanvasElement, document } = require('./Window');
 const {
@@ -47,4 +48,5 @@ module.exports = {
   window,
   HTMLCanvasElement,
   document,
+  encrypt_MD5,
 };

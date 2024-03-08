@@ -1,4 +1,4 @@
-const { getXSCommon, encrypt_sign, a0_0x10f4ac, a0_0x3693, a0_0x1131, esm_typeof, encrypt_mcr, getPlatformCode, initParams, generateLocalId, } = require('./X-S-Common');
+const { getXSCommon, encrypt_sign, a0_0x10f4ac, a0_0x3693, a0_0x1131, esm_typeof, encrypt_mcr, getPlatformCode, initParams, generateLocalId, encrypt_MD5, } = require('./X-S-Common');
 const { window, HTMLCanvasElement, document } = require('./Window');
 const { slice, slice_default, is_array_default, parse_int_default, index_of_default, define_property_default, stringify_default, map_default, __webpack_require__, } = require('./webpack');
 module.exports = {
@@ -24,5 +24,6 @@ module.exports = {
     window,
     HTMLCanvasElement,
     document,
+    encrypt_MD5,
 };
 //# sourceMappingURL=index.js.map

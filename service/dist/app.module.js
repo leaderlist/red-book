@@ -10,9 +10,9 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
-const api_module_1 = require("./api/api.module");
-const api_controller_1 = require("./api/api.controller");
-const api_service_1 = require("./api/api.service");
+const api_module_1 = require("./modules/api/api.module");
+const api_controller_1 = require("./modules/api/api.controller");
+const api_service_1 = require("./modules/api/api.service");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;

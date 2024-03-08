@@ -11,3 +11,4 @@ export function encrypt_mcr(t: any): any;
 export function getPlatformCode(t: any): any;
 export function initParams(): void;
 export function generateLocalId(t: any): any;
+export var encrypt_MD5: any;

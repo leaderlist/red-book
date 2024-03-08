@@ -56,6 +56,7 @@ export class ApiService {
     } else {
       responseData = defaultHeaderFailedRes;
     }
+    console.log(responseData, 'responseData');
     return responseData;
   }
 
@@ -97,21 +98,16 @@ export class ApiService {
   }
 
   async loginCode(url: string, data: LoginCodeRequest, response: Response) {
-    console.log(url, data);
     const encryptData = await getEncryptData(url, data);
     let resData: SendCodeResponse | void = defaultRes;
     if (encryptData && encryptData.cookie) {
       const result = await postFetch<LoginCodeRequest, LoginCodeResponse>(
         `${BASE_URL}${modulePrefix}/v2/login/code`,
         data,
-        {
-          headers: {
-            ...formatHeader(encryptData, webSession),
-            'Content-Type': 'application/json',
-          },
-        },
+        { headers: { ...formatHeader(encryptData, webSession) } },
       );
       resData = result;
+      console.log(result.data.session, webSession)
       if (result.data.session) {
         webSession = `web_session=${result.data.session};`;
         response.setHeader('Set-Cookie', webSession);
@@ -149,18 +145,18 @@ export class ApiService {
     return responseData;
   }
 
-  async getHomeFeed(url: string, data: GetHomeFeedRequest) {
-    const encryptData = await getEncryptData(url);
+  async getHomeFeed(url: string, data: GetHomeFeedRequest, headers: any) {
+    const encryptData = await getEncryptData(url, data);
     let responseData: GetHomeFeedResponse = defaultRes;
     if (encryptData && encryptData.cookie) {
-      const result = await getFetch<GetHomeFeedRequest, GetHomeFeedResponse>(
+      const result = await postFetch<GetHomeFeedRequest, GetHomeFeedResponse>(
         `${BASE_URL}${modulePrefix}/v1/homefeed`,
         data,
         {
           headers: {
-            ...formatHeader(encryptData, webSession),
-            Accept: 'gzip,deflate,br',
-          },
+          ...formatHeader(encryptData, webSession),
+          'Content-Type': 'application/json; charset=UTF-8'
+          }
         },
       );
       console.log(result);

@@ -8,6 +8,7 @@ const fetch = axios_1.default.create({
     withCredentials: false,
 });
 fetch.interceptors.request.use((config) => {
+    console.log(config);
     return config;
 }, (error) => {
     Promise.reject(error);

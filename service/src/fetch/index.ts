@@ -10,6 +10,7 @@ const fetch = axios.create({
 // 创建请求拦截
 fetch.interceptors.request.use(
   (config) => {
+    console.log(config)
     return config;
   },
   (error) => {

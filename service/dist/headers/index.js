@@ -1,6 +1,7 @@
 const { generateLocalId, getXSCommon } = require('../X-Data/X-S-Common');
-const { window, document } = require('../X-Data/Window');
-const { getSignParams, initLocalStorage } = require('./getSignParams');
+const { window, document, initLocalStorage } = require('../X-Data/Window');
+const { getSignParams } = require('./getSignParams');
+localStorage = window.localStorage;
 var HTMLCanvasElement = window.HTMLCanvasElement;
 HTMLCanvasElement.prototype.getContext = function () {
     return {};
@@ -15,6 +16,13 @@ window.document = {
 function Sanji() {
     var _ace_2725e = 2147483647, _ace_a72ba = 1, _ace_c9a41 = 0, _ace_e36bd = !!_ace_a72ba, _ace_512 = !!_ace_c9a41;
     return function (_ace_4752e, _ace_aa949, _ace_be07c) {
+        const origin = JSON.stringify;
+        JSON.stringify = (val) => {
+            if (Object.keys(val).includes('appId')) {
+                val.appId = 'xhs-pc-web';
+            }
+            return origin.call(JSON, val);
+        };
         var _ace_a3718 = [], _ace_9750 = [], _ace_66 = {}, _ace_238b0 = [], _ace_420ea = {
             _ace_5ee37: _ace_4752e
         }, _ace_d4acc = {}, _ace_6458 = _ace_c9a41, _ace_0edd5 = [];
