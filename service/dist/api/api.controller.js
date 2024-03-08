@@ -24,16 +24,21 @@ let ApiController = class ApiController {
         return this.apiService.sendCode(req.url, { phone, zone, type });
     }
     async activate(req, res) {
-        const result = await this.apiService.getActivate(req.url);
-        res.setHeader('set-cookie', `web_session=${result.data.session}`);
-        return result;
+        return this.apiService.getActivate(req.url, res);
     }
     async checkCode(req, phone, zone, code) {
         return this.apiService.checkCode(req.url, { phone, zone, code });
     }
-    async loginCode(req) {
-        console.log(req.body);
-        return this.apiService.loginCode(req.url, { mobile_token: req.body.mobile_token, phone: req.body.phone, zone: req.body.zone });
+    async loginCode(req, res) {
+        const { mobile_token, phone, zone } = req.body;
+        const data = { mobile_token, phone, zone };
+        return this.apiService.loginCode(req.url, data, res);
+    }
+    async getUserInfo(req) {
+        return this.apiService.getUserInfo(req.url);
+    }
+    async getHomeFeed(req, body) {
+        return this.apiService.getHomeFeed(req.url, body);
     }
 };
 exports.ApiController = ApiController;
@@ -69,10 +74,26 @@ __decorate([
 __decorate([
     (0, common_1.Post)('v2/login/code'),
     __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)({ passthrough: true })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], ApiController.prototype, "loginCode", null);
+__decorate([
+    (0, common_1.Get)('v2/user/me'),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], ApiController.prototype, "loginCode", null);
+], ApiController.prototype, "getUserInfo", null);
+__decorate([
+    (0, common_1.Post)('v1/homefeed'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], ApiController.prototype, "getHomeFeed", null);
 exports.ApiController = ApiController = __decorate([
     (0, common_1.Controller)('api/sns/web'),
     __metadata("design:paramtypes", [api_service_1.ApiService])

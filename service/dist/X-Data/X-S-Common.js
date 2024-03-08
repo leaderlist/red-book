@@ -406,7 +406,10 @@ var encrypt_MD5 = function (t) {
         isDone = true;
     }
     if (!window.document?.cookie?.includes('a1')) {
-        window.document.cookie = `a1=${generateLocalId('Mac OS')}`;
+        window.document.cookie = `a1=${generateLocalId('Mac OS')};xsecappid=xhs-pc-web;`;
+    }
+    if (!window.document.cookie.includes('appid')) {
+        window.document.cookie = window.document.cookie + ';xsecappid=xhs-pc-web;';
     }
     var e = 254, r = 789, n = 916, o = 1406, i = 1232, a = 1084, u = 1191, s = 963, c = 1087, l = 1270, f = 769, p = 915, h = 968, d = 919, v = 268, g = 681, m = 504, y = 562, w = 534, b = 444, _ = 356, E = 502, x = 352, T = 484, k = 593, S = 639, A = 5, L = 139, R = 82, I = 5, O = 51, C = 5, N = 157, P = 200, B = {
         _0x3e1aae: 69

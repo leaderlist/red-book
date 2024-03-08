@@ -10,7 +10,7 @@ HTMLCanvasElement.prototype.getContext = function () {
 
 window.document = {
   ...document,
-  cookie: `a1=${generateLocalId('Mac OS')}`,
+  cookie: `a1=${generateLocalId('Mac OS')};`,
   createDocument: function () {
     return {};
   },

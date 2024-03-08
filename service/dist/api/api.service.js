@@ -12,8 +12,10 @@ const service_1 = require("../constants/service");
 const fetch_1 = require("../fetch");
 const login_1 = require("../service/snsWebV1/login");
 const utils_1 = require("../utils");
+const modulePrefix = '/api/sns/web';
+let webSession = '';
 let ApiService = class ApiService {
-    async getActivate(url) {
+    async getActivate(url, response) {
         console.time('start handle fetch');
         const xHeaderData = await (0, login_1.getEncryptData)(url, {});
         let responseData = { ...service_1.defaultRes };
@@ -23,13 +25,17 @@ let ApiService = class ApiService {
             }
             else {
                 console.timeEnd('start handle fetch');
-                const result = await (0, fetch_1.postFetch)(`${service_1.BASE_URL}/api/sns/web/v1/login/activate`, {}, {
+                const result = await (0, fetch_1.postFetch)(`${service_1.BASE_URL}${modulePrefix}/v1/login/activate`, {}, {
                     headers: {
                         ...(0, utils_1.formatHeader)(xHeaderData),
                         'content-type': 'application/json;charset=UTF-8',
                     },
                 });
                 responseData = result;
+                if (result.data.session) {
+                    webSession = `web_session=${result.data.session};`;
+                    response.setHeader('set-cookie', webSession);
+                }
             }
         }
         else {
@@ -41,49 +47,94 @@ let ApiService = class ApiService {
         const encryptData = await (0, login_1.getEncryptData)(url);
         let resData = service_1.defaultRes;
         if (encryptData && encryptData.cookie) {
-            const result = await (0, fetch_1.getFetch)(`${service_1.BASE_URL}/api/sns/web/v2/login/send_code`, params, { headers: (0, utils_1.formatHeader)(encryptData) });
+            const result = await (0, fetch_1.getFetch)(`${service_1.BASE_URL}${modulePrefix}/v2/login/send_code`, params, { headers: (0, utils_1.formatHeader)(encryptData, webSession) });
             console.log(result);
             resData = result;
         }
         else {
-            resData = encryptData.cookie ? service_1.defaultHeaderFailedRes : service_1.defaultCookieFailedRes;
+            resData = encryptData.cookie
+                ? service_1.defaultHeaderFailedRes
+                : service_1.defaultCookieFailedRes;
         }
         return resData;
     }
     async checkCode(url, params) {
         const encryptData = await (0, login_1.getEncryptData)(url);
-        console.log(encryptData);
         let resData = service_1.defaultRes;
         if (encryptData && encryptData.cookie) {
-            const result = await (0, fetch_1.getFetch)(`${service_1.BASE_URL}/api/sns/web/v1/login/check_code`, params, { headers: (0, utils_1.formatHeader)(encryptData) });
+            const result = await (0, fetch_1.getFetch)(`${service_1.BASE_URL}${modulePrefix}/v1/login/check_code`, params, { headers: (0, utils_1.formatHeader)(encryptData, webSession) });
             resData = result;
         }
         else {
-            resData = encryptData.cookie ? service_1.defaultHeaderFailedRes : service_1.defaultCookieFailedRes;
+            resData = encryptData.cookie
+                ? service_1.defaultHeaderFailedRes
+                : service_1.defaultCookieFailedRes;
         }
         return resData;
     }
-    async loginCode(url, data) {
+    async loginCode(url, data, response) {
         console.log(url, data);
         const encryptData = await (0, login_1.getEncryptData)(url, data);
         let resData = service_1.defaultRes;
-        console.log(encryptData);
-        try {
-            if (encryptData && encryptData.cookie) {
-                const result = await (0, fetch_1.postFetch)(`${service_1.BASE_URL}/api/sns/web/v2/login/code`, data, { headers: { ...(0, utils_1.formatHeader)(encryptData), 'Content-Type': 'application/json' } }).then(res => {
-                    console.log(res);
-                    return res;
-                }).catch(e => console.log(e, 44444));
-                resData = result;
-            }
-            else {
-                resData = encryptData.cookie ? service_1.defaultHeaderFailedRes : service_1.defaultCookieFailedRes;
+        if (encryptData && encryptData.cookie) {
+            const result = await (0, fetch_1.postFetch)(`${service_1.BASE_URL}${modulePrefix}/v2/login/code`, data, {
+                headers: {
+                    ...(0, utils_1.formatHeader)(encryptData, webSession),
+                    'Content-Type': 'application/json',
+                },
+            });
+            resData = result;
+            if (result.data.session) {
+                webSession = `web_session=${result.data.session};`;
+                response.setHeader('Set-Cookie', webSession);
             }
         }
-        catch (error) {
-            console.log(error, 2222);
+        else {
+            resData = encryptData.cookie
+                ? service_1.defaultHeaderFailedRes
+                : service_1.defaultCookieFailedRes;
         }
         return resData;
+    }
+    async getUserInfo(url) {
+        const encryptData = await (0, login_1.getEncryptData)(url);
+        let responseData = service_1.defaultRes;
+        console.log((0, utils_1.formatHeader)(encryptData, webSession));
+        if (encryptData && encryptData.cookie) {
+            const result = await (0, fetch_1.getFetch)(`${service_1.BASE_URL}${modulePrefix}/v2/user/me`, undefined, {
+                headers: {
+                    ...(0, utils_1.formatHeader)(encryptData, webSession),
+                },
+            });
+            console.log(result, '/v2/user/me');
+            responseData = result;
+        }
+        else {
+            responseData = encryptData.cookie
+                ? service_1.defaultCookieFailedRes
+                : service_1.defaultHeaderFailedRes;
+        }
+        return responseData;
+    }
+    async getHomeFeed(url, data) {
+        const encryptData = await (0, login_1.getEncryptData)(url);
+        let responseData = service_1.defaultRes;
+        if (encryptData && encryptData.cookie) {
+            const result = await (0, fetch_1.getFetch)(`${service_1.BASE_URL}${modulePrefix}/v1/homefeed`, data, {
+                headers: {
+                    ...(0, utils_1.formatHeader)(encryptData, webSession),
+                    Accept: 'gzip,deflate,br',
+                },
+            });
+            console.log(result);
+            responseData = result;
+        }
+        else {
+            responseData = encryptData.cookie
+                ? service_1.defaultHeaderFailedRes
+                : service_1.defaultCookieFailedRes;
+        }
+        return responseData;
     }
 };
 exports.ApiService = ApiService;

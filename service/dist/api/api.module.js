@@ -17,7 +17,7 @@ exports.ApiModule = ApiModule = __decorate([
     (0, common_1.Module)({
         controllers: [api_controller_1.ApiController],
         providers: [api_service_1.ApiService],
-        imports: []
+        imports: [],
     })
 ], ApiModule);
 //# sourceMappingURL=api.module.js.map

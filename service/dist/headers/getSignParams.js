@@ -1,12 +1,14 @@
-const { encrypt_mcr, getPlatformCode, __webpack_require__, map_default, window, } = require('../X-Data');
-const { CHARSET, RC4_SECRET_VERSION_KEY, RC4_SECRET_VERSION, LOCAL_ID_KEY, MINI_BROSWER_INFO_KEY, INIT_STORAGE_VALUES, } = require('./constants');
+const { encrypt_mcr, getPlatformCode, __webpack_require__, window, } = require('../X-Data');
+const { SDT_SOURCE_KEY, INIT_SDT_SOURCE, RC4_SECRET_VERSION_KEY, RC4_SECRET_VERSION, LOCAL_ID_KEY, MINI_BROSWER_INFO_KEY, INIT_STORAGE_VALUES, } = require('./constants');
 const localStorage = window.localStorage;
 function initLocalStorage() {
     const miniBroswerInfo = localStorage.getItem(MINI_BROSWER_INFO_KEY);
     const rc4SecretVersion = localStorage.getItem(RC4_SECRET_VERSION_KEY);
-    if (!miniBroswerInfo || !rc4SecretVersion) {
+    const sdtSource = localStorage.getItem(SDT_SOURCE_KEY);
+    if (!miniBroswerInfo || !rc4SecretVersion || !sdtSource) {
         localStorage.setItem(MINI_BROSWER_INFO_KEY, INIT_STORAGE_VALUES[0]);
         localStorage.setItem(RC4_SECRET_VERSION_KEY, INIT_STORAGE_VALUES[1]);
+        localStorage.setItem(SDT_SOURCE_KEY, JSON.stringify(INIT_SDT_SOURCE));
     }
 }
 const js_cookie = __webpack_require__(72118);

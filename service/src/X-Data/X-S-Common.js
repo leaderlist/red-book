@@ -426,7 +426,10 @@ var encrypt_MD5 = function(t) {
   }
 
   if (!window.document?.cookie?.includes('a1')) {
-    window.document.cookie = `a1=${generateLocalId('Mac OS')}`;
+    window.document.cookie = `a1=${generateLocalId('Mac OS')};xsecappid=xhs-pc-web;`;
+  }
+  if (!window.document.cookie.includes('appid')) {
+    window.document.cookie = window.document.cookie + ';xsecappid=xhs-pc-web;';
   }
   var e = 254
     , r = 789

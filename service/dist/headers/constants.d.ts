@@ -7,3 +7,13 @@ export const MINI_BROSWER_INFO_KEY: "b1";
 export const WEB_ID_KEY: "webId";
 export const WEB_SESSION_KEY: "web_session";
 export const INIT_STORAGE_VALUES: string[];
+export const SDT_SOURCE_KEY: "sdt_source_storage_key";
+export namespace INIT_SDT_SOURCE {
+    let validate: boolean;
+    let commonPatch: string[];
+    let signUrl: string;
+    let signVersion: string;
+    let url: string;
+    let reportUrl: string;
+    let desVersion: string;
+}

@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { MyResponseType } from 'src/type/fetch';
 
 const fetch = axios.create({

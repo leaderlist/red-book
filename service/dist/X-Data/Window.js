@@ -1,4 +1,5 @@
-const { JSDOM } = require('jsdom');
+const jsdom = require('jsdom');
+const { JSDOM } = jsdom;
 const Storage = require('dom-storage');
 var dom = new JSDOM('', {
     url: 'https://www.xiaohongshu.com/',
