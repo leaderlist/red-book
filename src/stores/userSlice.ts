@@ -1,8 +1,9 @@
 import { bindActionCreators, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
-import { LoginResponse, SexyType } from 'src/types/user';
+import { GetUserInfoResponse } from 'src/types/user';
 import { getStorage, setStorage } from './storage';
 import { USER_INFO_STORAGE_KEY } from 'src/constants';
+import { getUserInfo } from 'src/apis/user';
 
 export enum Status {
   Loading = 'loading',
@@ -10,21 +11,20 @@ export enum Status {
   Failed = 'failed',
 }
 
-const initialState: { userInfo: LoginResponse; status: Status } = {
+const initialState: { userInfo: GetUserInfoResponse; status: Status } = {
   userInfo: {
-    name: '',
-    nickName: '',
-    sex: SexyType.MALE,
-    redBookId: 0,
-    avatar: ``,
-    location: '',
+    user_id: '',
+    nickname: '',
+    guest: false,
     desc: '',
+    imageb: '',
+    images: ``,
   },
   status: Status.Loading,
 };
 
 export const checkUserInfo = createAsyncThunk('user/checkUserInfo', async () => {
-  const res = await getStorage<LoginResponse>(USER_INFO_STORAGE_KEY);
+  const res = await getStorage<GetUserInfoResponse>(USER_INFO_STORAGE_KEY);
   return res;
 });
 
@@ -43,7 +43,7 @@ export const userSlice = createSlice({
         state.status = Status.Loading;
       })
       .addCase(checkUserInfo.fulfilled, (state, action) => {
-        if (action.payload) {
+        if (action.payload && action.payload.user_id) {
           state.status = Status.Success;
           state.userInfo = action.payload;
         } else {

@@ -3,8 +3,7 @@ export function insertStr(str: string, index: number, insertString: string) {
 }
 
 export function isRealPhoneNumber(numberVal?: string) {
-  const targetNumber = numberVal?.split('-')[1];
-  return targetNumber && isNumber(Number(targetNumber));
+  return numberVal && isNumber(Number(numberVal));
 }
 
 export function isNumber(number: any) {

@@ -1,6 +1,24 @@
 import QS from 'qs';
+import { setCookies } from 'src/utils/cookieManager';
 
 type RequestMethods = 'GET' | 'POST' | 'PUT' | 'DELETE';
+
+interface MyHeaders extends Headers {
+  map: {
+    [key: string]: string;
+    ['set-cookie']: string;
+  };
+}
+// interface MyResponse extends Response {
+//   headers: MyHeaders;
+// }
+
+interface MyResponse<D> {
+  data: D;
+  code: number;
+  msg: string;
+  success: boolean;
+}
 // fetch.interceptors.request.use(function (config) {
 // return {...config, customConfig};
 // })
@@ -16,7 +34,10 @@ interface RequestConfig extends RequestInit {
   baseUrl?: string;
 }
 
-interface FetchConfig extends Omit<RequestConfig, 'url' | 'method' | 'body'> {}
+interface FetchConfig<B> extends Omit<RequestConfig, 'url' | 'method' | 'body'> {
+  data?: B;
+  params?: B;
+}
 
 type RequestResolveCallback = (config: RequestConfig) => RequestConfig | Promise<RequestConfig>;
 type RequestRejectCallback = (config: RequestConfig) => Error;
@@ -68,7 +89,12 @@ export default class MyFetch {
     };
   }
 
-  async fetch(url: string, method: RequestMethods, data?: BodyInit_ | null, options?: FetchConfig) {
+  async fetch<T, D>(
+    url: string,
+    method: RequestMethods,
+    data?: T,
+    options?: Omit<FetchConfig<any>, 'body'>,
+  ): Promise<MyResponse<D>> {
     const config = this.requestResolveInterceptors.reduce((prev, current) => {
       return { ...prev, ...current(this.config) };
     }, this.config);
@@ -85,11 +111,29 @@ export default class MyFetch {
       url = `${baseUrl}${url}`;
     }
 
+    if (init.method === 'POST') {
+      init.headers = {
+        ...(init.headers || {}),
+        'Content-Type': 'application/json;charset=utf-8',
+      };
+    }
+    console.log(url, init);
     try {
-      const response = await fetch(url, init).then((res) => {
-        if (res.status !== 200) {
-          console.log(44444, res.statusText);
+      const response = await fetch(url, init).then((res: any) => {
+        console.log(res);
+        if (res.status !== 200 && res.status !== 201) {
           return Promise.reject(res.statusText);
+        }
+
+        if (res.headers.map['set-cookie']) {
+          const cookies = res.headers.map['set-cookie'] as string;
+          const result: Record<string, string> = {};
+          cookies.split(';').forEach((item) => {
+            if (!item) return;
+            const [key, value] = item.split('=');
+            result[key] = value;
+          });
+          setCookies(result);
         }
         return res.json();
       });
@@ -107,21 +151,26 @@ export default class MyFetch {
   }
 
   // data改为query,类型为键值对
-  get<Request, Response>(url: string, data?: Request | null, options?: FetchConfig): Promise<Response> {
-    const realUrl = `${url}?${QS.stringify(data)}`;
-    return this.fetch(realUrl, 'GET', null, options);
+  get<Response, Request = undefined>(url: string, options?: FetchConfig<Request>): Promise<MyResponse<Response>> {
+    const { params, ...reset } = options || ({} as FetchConfig<Request>);
+    const realUrl = params ? `${url}?${QS.stringify(params)}` : url;
+    console.log(realUrl, params)
+    return this.fetch<Request, Response>(realUrl, 'GET', undefined, reset);
   }
 
   // 参数改为params,类型为any
-  post(url: string, data?: BodyInit_ | null, options?: FetchConfig) {
-    return this.fetch(url, 'POST', data, options);
+  post<Response, Request = undefined>(url: string, options?: FetchConfig<Request>): Promise<MyResponse<Response>> {
+    const { data, ...reset } = options || ({} as FetchConfig<Request>);
+    return this.fetch<Request, Response>(url, 'POST', data, reset);
   }
 
-  put(url: string, data?: BodyInit_ | null, options?: FetchConfig) {
-    return this.fetch(url, 'PUT', data, options);
+  put<Response, Request = undefined>(url: string, options?: FetchConfig<Request>): Promise<MyResponse<Response>> {
+    const { data, ...reset } = options || ({} as FetchConfig<Request>);
+    return this.fetch<Request, Response>(url, 'PUT', data, reset);
   }
 
-  delete(url: string, data?: BodyInit_ | null, options?: FetchConfig) {
-    return this.fetch(url, 'DELETE', data, options);
+  delete<Response, Request = undefined>(url: string, options?: FetchConfig<Request>): Promise<MyResponse<Response>> {
+    const { data, ...reset } = options || ({} as FetchConfig<Request>);
+    return this.fetch<Request, Response>(url, 'DELETE', data, reset);
   }
 }

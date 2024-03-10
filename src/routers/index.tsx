@@ -1,10 +1,10 @@
 import { NavigationContainer, ParamListBase, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationOptions, createNativeStackNavigator } from '@react-navigation/native-stack';
 // import { TransitionPresets } from '@react-navigation/stack';
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Welcome } from 'src/modules/Welcome';
 import { Home } from 'src/modules/Home';
 import { Login } from 'src/modules/Login';
+import { UploadModal } from 'src/modules/UploadModal';
 
 interface BaseRoute {
   name: string;
@@ -29,7 +29,7 @@ const Stack = createNativeStackNavigator();
 const routerMapList: RouteItem[] = [
   {
     name: 'Welcome',
-    component: Welcome
+    component: Welcome,
   },
   {
     name: 'Home',
@@ -51,6 +51,9 @@ export const Router = () => {
         {routerMapList.map((item, index) => (
           <Stack.Screen {...item} key={`${item.name}-${index}`} options={{ ...item.options }} />
         ))}
+        <Stack.Group screenOptions={{ presentation: 'modal', animation: 'slide_from_bottom' }}>
+          <Stack.Screen name="Upload" component={UploadModal} />
+        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );

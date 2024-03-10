@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.formatHeader = void 0;
+exports.handleCookie = exports.formatHeader = exports.cookieMap = void 0;
+exports.cookieMap = {};
 const formatHeader = (xHeaderData, activeCookie) => {
     return {
         'x-t': xHeaderData['X-t'] + '',
@@ -10,4 +11,21 @@ const formatHeader = (xHeaderData, activeCookie) => {
     };
 };
 exports.formatHeader = formatHeader;
+const handleCookie = (result, response) => {
+    if (result.cookie) {
+        const { cookie } = result;
+        const cookieData = cookie.reduce((acc, cur) => {
+            return acc + cur.split(';')[0] + ';';
+        }, '');
+        response.setHeader('set-cookie', cookieData);
+        cookie.forEach((item) => {
+            const cookieStr = item.split(';')[0];
+            const [key, value] = cookieStr.split('=');
+            exports.cookieMap[key] = value;
+        });
+        console.log(exports.cookieMap);
+    }
+    return result;
+};
+exports.handleCookie = handleCookie;
 //# sourceMappingURL=index.js.map

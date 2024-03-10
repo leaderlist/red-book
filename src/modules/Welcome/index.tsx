@@ -13,6 +13,7 @@ export const Welcome = () => {
   useEffect(() => {
     // fetch useInfo and check login status
     store.dispatch(checkUserInfo());
+    console.log('welcome did mount');
 
     const backHandle = BackHandler.addEventListener('hardwareBackPress', () => {
       return true;
@@ -24,10 +25,11 @@ export const Welcome = () => {
   }, [navigate]);
 
   useEffect(() => {
+    console.log(status);
     if (status === Status.Success) {
       navigate.replace('Home');
     } else if (status === Status.Failed) {
-      navigate.replace('Home');
+      navigate.replace('Login');
     }
   }, [navigate, status]);
 

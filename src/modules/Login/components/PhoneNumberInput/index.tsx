@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef, useImperativeHandle, useState, useRef } from 'react';
 import { TextInput, View, Image, Text, Platform, TouchableOpacity } from 'react-native';
 import style from './style';
 import icon_triangle from 'src/assets/icon_triangle.png';
@@ -9,27 +9,40 @@ interface Props {
   onChange: (val: string) => void;
 }
 
-export const PhoneNumberInput = forwardRef<TextInput, Props>((props, ref) => {
-  const [dialNumber, setDialNumber] = useState(86);
+export interface PhoneNumberInputRef {
+  focus: () => void;
+  zoneNumber: number;
+}
+
+export const PhoneNumberInput = forwardRef<PhoneNumberInputRef, Props>((props, ref) => {
+  const [zoneNumber] = useState(86);
   const [phoneNumber, setPhoneNumber] = useState('');
+  const inputRef = useRef<TextInput>(null);
   const { onChange } = props;
+
+  useImperativeHandle<PhoneNumberInputRef, PhoneNumberInputRef>(ref, () => ({
+    focus: () => {
+      inputRef.current?.focus();
+    },
+    zoneNumber,
+  }));
 
   const isAndroid = Platform.OS === 'android';
   return (
     <View style={style.root}>
-      <View style={style.dialArea}>
-        <Text style={style.dialNumber}>{`+${dialNumber}`}</Text>
+      <View style={style.zoneArea}>
+        <Text style={style.zoneNumber}>{`+${zoneNumber}`}</Text>
         <Image style={style.iconTriangle} source={icon_triangle} />
       </View>
       <TextInput
         style={style.input}
         value={phoneNumber}
-        ref={ref}
+        ref={inputRef}
         onChange={(e) => {
           const { text } = e.nativeEvent;
           const newText = text.replace(/[^\d]+/, '');
           setPhoneNumber(newText);
-          onChange(`${dialNumber}-${newText}`);
+          onChange(newText);
           e.preventDefault();
         }}
         placeholder="请输入手机号码"

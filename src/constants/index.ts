@@ -1,5 +1,6 @@
 export const WELCOME_DELAY_TIME = 3000;
 
-export const BASE_URL = 'https://edith.xiaohongshu.com/api';
+export const BASE_URL = 'http://192.168.1.106:3000'; //'https://edith.xiaohongshu.com/api';
+export const DEFAULT_DOMAIN = 'xiaohongshu.com';
 
 export const USER_INFO_STORAGE_KEY = 'userInfo';

@@ -8,6 +8,7 @@ export interface BaseResponse<T> {
     code: number;
     success: boolean;
     message: string;
+    cookie?: string[];
     data: T | null;
 }
 export type ActiveRes = BaseResponse<ActiveResponseData>;
@@ -116,11 +117,24 @@ export interface GetHomeFeedRequest {
     unread_end_note_id: string;
     unread_note_count: number;
 }
+export interface CheckCodeResponseData {
+    mobile_token: string;
+}
+export interface LoginPasswordRequest {
+    phone: number;
+    zone: number;
+    password: string;
+}
+export interface LoginPasswordResponseData {
+    onboarding_page: any[];
+    session: string;
+    user_exists: boolean;
+    user_id: string;
+}
 export type ActivateResponse = BaseResponse<ActivateData>;
 export type SendCodeResponse = BaseResponse<{}>;
-export type CheckCodeResponse = BaseResponse<{
-    mobile_token: string;
-}>;
+export type CheckCodeResponse = BaseResponse<CheckCodeResponseData>;
 export type LoginCodeResponse = BaseResponse<LoginCodeResponseData>;
 export type GetUserInfoResponse = BaseResponse<GetUserInfoResponseData>;
 export type GetHomeFeedResponse = BaseResponse<GetHomeFeedResponseData>;
+export type LoginPasswordResponse = BaseResponse<LoginPasswordResponseData>;

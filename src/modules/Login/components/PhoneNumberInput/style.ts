@@ -8,12 +8,12 @@ export default StyleSheet.create({
     borderBottomWidth: 0.5,
     borderBottomColor: '#e9e9e9',
   },
-  dialArea: {
+  zoneArea: {
     flexDirection: 'row',
     alignItems: 'center',
     position: 'relative',
   },
-  dialNumber: {
+  zoneNumber: {
     color: '#999',
     fontSize: 18,
   },

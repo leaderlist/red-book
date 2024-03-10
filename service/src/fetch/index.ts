@@ -10,7 +10,6 @@ const fetch = axios.create({
 // 创建请求拦截
 fetch.interceptors.request.use(
   (config) => {
-    console.log(config)
     return config;
   },
   (error) => {
@@ -23,7 +22,9 @@ fetch.interceptors.response.use(
   (res) => {
     const data = res.data;
     // 处理自己的业务逻辑，比如判断 token 是否过期等等
-    // 代码块
+    if (res.headers['set-cookie']) {
+      data.cookie = res.headers['set-cookie'];
+    }
     return data;
   },
   (error) => {

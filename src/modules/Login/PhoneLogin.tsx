@@ -1,9 +1,9 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, ToastAndroid } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import { PhoneLoginStyle as style } from './style';
 import { NavigationProps } from 'src/types';
 import icon_close from 'src/assets/icon_close_modal.png';
 import icon_exchange from 'src/assets/icon_exchange.png';
-import { PhoneNumberInput } from './components/PhoneNumberInput';
+import { PhoneNumberInput, PhoneNumberInputRef } from './components/PhoneNumberInput';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Protocol } from './components/Protocol';
 import { ProtocolList } from 'src/constants/login';
@@ -14,6 +14,8 @@ import { useAppSelector } from 'src/stores/hooks';
 import { ModelRef, ProtocolModal } from './components/ProtocalModal';
 // import { login } from 'src/apis/user';
 import { useUserInfoAction } from 'src/stores/userSlice';
+import { checkCode, getUserInfo, loginCode, sendCode } from 'src/apis/user';
+import { SendType } from 'src/types/user';
 
 enum LoginWay {
   PhoneNumber = 'phoneNumber',
@@ -28,26 +30,31 @@ interface LoginData {
 
 export const PhoneLogin = ({ navigation }: { navigation: NavigationProps }) => {
   const [loginWay, setLoginWay] = useState<LoginWay>(LoginWay.PhoneNumber);
-  const [loginData, setLoginData] = useState<LoginData | undefined>();
+  const [loginData, setLoginData] = useState<LoginData>({ phoneNumber: '' });
   const [showVerificationCode, setShowVerificationCode] = useState(false);
+  const [isCanSend, setIsCanSend] = useState(false);
+  const phoneNumberInputRef = useRef<PhoneNumberInputRef>(null);
+  const protocolModalRef = useRef<ModelRef>(null);
 
   const isLoginByPhone = useMemo(() => loginWay === LoginWay.PhoneNumber, [loginWay]);
   const buttonDisable = useMemo(() => {
     const { phoneNumber, verificationCode, password } = loginData || {};
     if (isLoginByPhone) {
+      const isZh = phoneNumberInputRef.current?.zoneNumber === 86;
       const numberValid = !!phoneNumber && !!isRealPhoneNumber(phoneNumber);
+      const zhValid = phoneNumber?.length === 11 && numberValid;
+      console.log(phoneNumber, phoneNumber?.length === 11, numberValid);
+      console.log(isZh, zhValid, numberValid);
       if (showVerificationCode) {
         const verificationValid =
           verificationCode && isNumber(Number(verificationCode)) && verificationCode?.length === 6;
-        return !numberValid || !verificationValid;
+        return !(isZh ? zhValid : numberValid) || !verificationValid;
       } else {
-        return !numberValid;
+        return !(isZh ? zhValid : numberValid);
       }
     }
     return !password;
   }, [isLoginByPhone, loginData, showVerificationCode]);
-  const phoneNumberInputRef = useRef<TextInput>(null);
-  const protocolModalRef = useRef<ModelRef>(null);
 
   const isSelected = useAppSelector((state) => state.login.isSelected);
   const { changeUserInfo } = useUserInfoAction();
@@ -58,19 +65,56 @@ export const PhoneLogin = ({ navigation }: { navigation: NavigationProps }) => {
     }
   }, [loginWay, showVerificationCode]);
 
-  const handleLoginButtonPress = () => {
+  const handleCheckCode = async (code: number) => {
+    const phone = Number(loginData.phoneNumber);
+    const zone = Number(phoneNumberInputRef.current?.zoneNumber);
+    const params = { phone, zone, code };
+    const checkResult = await checkCode(params);
+    if (!checkResult.data?.mobile_token) {
+      console.log('验证失败, 请重试');
+      return;
+    }
+    const loginCodeData = await loginCode({ phone, zone, mobile_token: checkResult.data.mobile_token });
+    if (!loginCodeData?.data?.user_id) {
+      console.log('登录失败, 请重试');
+      return;
+    }
+    // 请求用户信息
+    const userInfo = await getUserInfo();
+    console.log(userInfo, 'userInfo');
+    if (userInfo.data.user_id) {
+      changeUserInfo(userInfo.data);
+      navigation.replace('Home');
+    }
+  };
+
+  const handleSendCode = () => {
+    setShowVerificationCode(true);
+    const phone = Number(loginData.phoneNumber);
+    const zone = Number(phoneNumberInputRef.current?.zoneNumber);
+    const params = { phone, zone, type: SendType.Login };
+    sendCode(params);
+    setIsCanSend(false);
+  };
+
+  const handleLoginButtonPress = async () => {
     if (!isSelected) {
       protocolModalRef.current?.changeVisible(true);
       return;
     }
     if (isLoginByPhone) {
       if (showVerificationCode) {
-        // 验证登录
+        // 验证登录,发请求验证6位验证码
+        handleCheckCode(Number(loginData.verificationCode));
       } else {
-        setShowVerificationCode(true);
+        if (!phoneNumberInputRef.current?.zoneNumber) {
+          return;
+        }
+        // 请求6位验证码
+        handleSendCode();
       }
     } else {
-      // 密码登录,当前接口只支持该模式
+      // 密码登录,当前接口不支持该模式
       // const params = { name: 'dagongjue', pwd: '1234565' };
       // login(params)
       //   .then((res) => {
@@ -101,8 +145,11 @@ export const PhoneLogin = ({ navigation }: { navigation: NavigationProps }) => {
         {isLoginByPhone ? (
           showVerificationCode && (
             <VerificationCodeInput
+              isCanSend={isCanSend}
               value={loginData?.verificationCode}
+              setIsCanSend={setIsCanSend}
               onChange={(val) => setLoginData({ phoneNumber: loginData?.phoneNumber || '', verificationCode: val })}
+              sendCode={handleSendCode}
             />
           )
         ) : (
@@ -128,7 +175,7 @@ export const PhoneLogin = ({ navigation }: { navigation: NavigationProps }) => {
           activeOpacity={1}
           style={StyleSheet.compose(style.loginButton, buttonDisable && style.disable)}
           onPress={() => handleLoginButtonPress()}>
-          <Text style={style.loginText}>{isLoginByPhone ? '验证并登录' : '登录'}</Text>
+          <Text style={style.loginText}>{isLoginByPhone && !isCanSend ? '验证并登录' : '登录'}</Text>
         </TouchableOpacity>
         <Protocol protocolList={ProtocolList} />
       </View>

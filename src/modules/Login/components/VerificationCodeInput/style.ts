@@ -13,4 +13,10 @@ export default StyleSheet.create({
     paddingVertical: 6,
     marginTop: 9,
   },
+  resend: {
+    paddingTop: 18,
+  },
+  activeText: {
+    color: '#007AFF',
+  }
 });

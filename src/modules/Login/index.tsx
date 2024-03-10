@@ -49,10 +49,13 @@ const DefaultLogin = ({ navigation }: { navigation: NavigationProps }) => {
     <View style={style.container}>
       <Image style={style.logo} source={icon_main_logo} />
       <View style={style.loginFooter}>
-        <TouchableOpacity activeOpacity={1} style={style.phoneButton} onPress={() => {
-          navigation.push('phone');
-          confirmQuit.current = false;
-        }}>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={style.phoneButton}
+          onPress={() => {
+            navigation.push('phone');
+            confirmQuit.current = false;
+          }}>
           {getSvg(getPhoneSvg(), '20', '18')}
           <Text style={style.buttonText}>手机号登录</Text>
         </TouchableOpacity>

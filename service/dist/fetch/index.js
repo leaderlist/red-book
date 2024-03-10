@@ -8,13 +8,15 @@ const fetch = axios_1.default.create({
     withCredentials: false,
 });
 fetch.interceptors.request.use((config) => {
-    console.log(config);
     return config;
 }, (error) => {
     Promise.reject(error);
 });
 fetch.interceptors.response.use((res) => {
     const data = res.data;
+    if (res.headers['set-cookie']) {
+        data.cookie = res.headers['set-cookie'];
+    }
     return data;
 }, (error) => {
     let message = '';
