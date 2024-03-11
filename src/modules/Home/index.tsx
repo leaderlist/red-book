@@ -36,11 +36,7 @@ function MyTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
             navigation.navigate('Upload');
             return;
           }
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-            canPreventDefault: true,
-          });
+          const event = navigation.emit({ type: 'tabPress', target: route.key, canPreventDefault: true });
 
           if (!isFocused && !event.defaultPrevented) {
             navigation.navigate(route.name);
@@ -77,7 +73,7 @@ const HomePageRouter = () => {
   return (
     <Tab.Navigator
       initialRouteName="Default"
-      tabBar={(props) => <MyTabBar {...props} />}
+      tabBar={MyTabBar}
       screenOptions={() => ({
         headerShown: false,
       })}>
