@@ -1,14 +1,17 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  root: {
-    height: 36,
-    flexDirection: 'row',
-    paddingHorizontal: 10,
+  card: {
     width: '100%',
+    backgroundColor: '#fff',
+    borderRadius: 4,
+  },
+  content: {
+    padding: 6,
+  },
+  footer: {
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderColor: '#f8f8f8',
-    borderBottomWidth: 1,
-  },
+  }
 });

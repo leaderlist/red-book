@@ -4,7 +4,7 @@ export default StyleSheet.create({
   root: {
     flex: 1,
     paddingHorizontal: 4,
-    backgroundColor: '#fff',
+    backgroundColor: '#fafafa',
     alignItems: 'center',
     justifyContent: 'center',
   },

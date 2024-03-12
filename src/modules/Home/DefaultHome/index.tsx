@@ -1,7 +1,6 @@
 import { View, Text, TouchableOpacity, Animated, Dimensions } from 'react-native';
 import { MaterialTopTabBarProps, createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import style from './style';
-import { HomeHeader } from 'src/components/HomeHeader';
 import { Find } from '../components/Find';
 import { Follow } from '../components/Follow';
 import { Nearby } from '../components/Nearby';
@@ -68,7 +67,6 @@ function MyTabBar({ state, descriptors, navigation, position }: MaterialTopTabBa
 export const DefaultHome = () => {
   return (
     <View style={style.root}>
-      {/* <HomeHeader /> */}
       <Tab.Navigator
         tabBar={MyTabBar}
         initialLayout={{ width: Dimensions.get('window').width }}
