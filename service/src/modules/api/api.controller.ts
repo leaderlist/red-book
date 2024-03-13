@@ -2,11 +2,11 @@ import {
   Controller,
   Get,
   Post,
-  HttpCode,
   Res,
   Req,
   Query,
   Body,
+  Param,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { GetHomeFeedRequest, LoginCodeRequest, SendType } from 'src/type/fetch';
@@ -47,13 +47,22 @@ export class ApiController {
     return this.apiService.checkCode(req.url, { phone, zone, code }, res);
   }
 
+  @Get('v1/user/otherinfo')
+  async getOtherInfo(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+    @Query('user_id') user_id: string,
+  ) {
+    console.log(user_id, 'getOtherInfo');
+    return this.apiService.getOtherInfo(req.url, { user_id }, res);
+  }
+
   @Post('v2/login/code')
   async loginCode(
     @Req() req: Request,
     @Body() reqBody: LoginCodeRequest,
     @Res({ passthrough: true }) res: Response,
   ) {
-    console.log(reqBody, 'login code');
     const { mobile_token, phone, zone } = reqBody;
     const data = { mobile_token, phone, zone };
     return this.apiService.loginCode(req.url, data, res);
@@ -81,5 +90,13 @@ export class ApiController {
     @Res({ passthrough: true }) res: Response,
   ) {
     return this.apiService.getHomeFeed(req.url, body, res);
+  }
+
+  @Get('v1/homefeed/category')
+  async getHomefeedCategory(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    return this.apiService.getHomefeedCategory(req.url, res);
   }
 }

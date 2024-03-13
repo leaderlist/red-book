@@ -23,7 +23,7 @@ const handleCookie = (result, response) => {
             const [key, value] = cookieStr.split('=');
             exports.cookieMap[key] = value;
         });
-        console.log(exports.cookieMap);
+        console.log(exports.cookieMap, 'cookieMap');
     }
     return result;
 };

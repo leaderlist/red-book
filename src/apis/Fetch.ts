@@ -127,6 +127,7 @@ export default class MyFetch {
 
         if (res.headers.map['set-cookie']) {
           const cookies = res.headers.map['set-cookie'] as string;
+          console.log(cookies, 'set cookies');
           const result: Record<string, string> = {};
           cookies.split(';').forEach((item) => {
             if (!item) return;
@@ -137,6 +138,13 @@ export default class MyFetch {
         }
         return res.json();
       });
+
+      console.log(response.data, typeof response.data.categories, 'response.data');
+
+      if (response.code !== 200 && response.code !== 201 && response.code !== 0) {
+        console.log(response, 'response');
+        throw new Error(response.message);
+      }
 
       return this.responseResolveInterceptors.reduce((prevResponse, currentCallback) => {
         return currentCallback(prevResponse);
@@ -154,7 +162,7 @@ export default class MyFetch {
   get<Response, Request = undefined>(url: string, options?: FetchConfig<Request>): Promise<MyResponse<Response>> {
     const { params, ...reset } = options || ({} as FetchConfig<Request>);
     const realUrl = params ? `${url}?${QS.stringify(params)}` : url;
-    console.log(realUrl, params)
+    console.log(realUrl, params);
     return this.fetch<Request, Response>(realUrl, 'GET', undefined, reset);
   }
 

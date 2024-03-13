@@ -12,14 +12,14 @@ export const HomeCard = (props: Props) => {
   const { imgUrl } = props;
   return (
     <View style={style.card}>
-      <Image source={{uri: imgUrl}} />
+      <Image source={{ uri: imgUrl }} />
       <View style={style.content}>
         <Text numberOfLines={2}>{props.title}</Text>
         <View style={style.footer}>
-          <Image source={{uri: props.avatar}} />
+          <Image source={{ uri: props.avatar }} />
           <Text>{props.likeCount}</Text>
         </View>
       </View>
     </View>
   );
-}
+};

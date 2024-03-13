@@ -22,6 +22,9 @@ import {
   GetHomeFeedRequest,
   LoginPasswordRequest,
   LoginPasswordResponse,
+  OtherInfoRequest,
+  OtherInfoResponse,
+  HomeFeedCategoryResponse,
 } from 'src/type/fetch';
 import { formatHeader, handleCookie, cookieMap } from 'src/utils';
 
@@ -116,6 +119,30 @@ export class ApiService {
     return resData;
   }
 
+  async getOtherInfo(
+    url: string,
+    params: OtherInfoRequest,
+    response: Response,
+  ) {
+    const encryptData = await getEncryptData(url);
+    let responseData: OtherInfoResponse = defaultRes;
+    if (encryptData?.cookie) {
+      const webSession = `web_session=${cookieMap['web_session']};`;
+      const result = await postFetch<OtherInfoRequest, OtherInfoResponse>(
+        `${BASE_URL}${modulePrefix}/v2/user/info`,
+        params,
+        { headers: { ...formatHeader(encryptData, webSession) } },
+      );
+      responseData = handleCookie(result, response);
+      console.log(responseData, 'getOtherInfo');
+    } else {
+      responseData = encryptData.cookie
+        ? defaultHeaderFailedRes
+        : defaultCookieFailedRes;
+    }
+    return responseData;
+  }
+
   async loginPassword(
     url: string,
     data: LoginPasswordRequest,
@@ -145,6 +172,7 @@ export class ApiService {
     let responseData: GetUserInfoResponse = defaultRes;
     if (encryptData && encryptData.cookie) {
       const webSession = `web_session=${cookieMap['web_session']};`;
+      console.log('webSession', webSession, 'encryptData', encryptData);
       const result = await getFetch<undefined, GetUserInfoResponse>(
         `${BASE_URL}${modulePrefix}/v2/user/me`,
         undefined,
@@ -188,6 +216,28 @@ export class ApiService {
         : defaultCookieFailedRes;
     }
 
+    return responseData;
+  }
+
+  async getHomefeedCategory(url: string, response: Response) {
+    const encryptData = await getEncryptData(url);
+    let responseData: HomeFeedCategoryResponse = defaultRes;
+    if (encryptData && encryptData.cookie) {
+      const webSession = `web_session=${cookieMap['web_session']};`;
+      const result = await getFetch<unknown, HomeFeedCategoryResponse>(
+        `${BASE_URL}${modulePrefix}/v1/homefeed/category`,
+        undefined,
+        {
+          headers: { ...formatHeader(encryptData, webSession) },
+        },
+      );
+      console.log(result);
+      responseData = handleCookie(result, response);
+    } else {
+      responseData = encryptData.cookie
+        ? defaultHeaderFailedRes
+        : defaultCookieFailedRes;
+    }
     return responseData;
   }
 }

@@ -48,6 +48,12 @@ export interface LoginCodeRequest {
   zone: string;
 }
 
+export interface OtherInfoRequest {
+  user_id: string;
+}
+
+export type OtherInfoResponseData = Record<string, any>;
+
 export interface LoginCodeResponseData {
   onboarding_page: any[];
   session: string;
@@ -150,6 +156,10 @@ export interface LoginPasswordResponseData {
   user_id: string;
 }
 
+export interface GetHomefeedCategoryResponseData {
+  categories: string[];
+}
+
 export type ActivateResponse = BaseResponse<ActivateData>;
 export type SendCodeResponse = BaseResponse<{}>;
 export type CheckCodeResponse = BaseResponse<CheckCodeResponseData>;
@@ -157,3 +167,5 @@ export type LoginCodeResponse = BaseResponse<LoginCodeResponseData>;
 export type GetUserInfoResponse = BaseResponse<GetUserInfoResponseData>;
 export type GetHomeFeedResponse = BaseResponse<GetHomeFeedResponseData>;
 export type LoginPasswordResponse = BaseResponse<LoginPasswordResponseData>;
+export type OtherInfoResponse = BaseResponse<OtherInfoResponseData>;
+export type HomeFeedCategoryResponse = BaseResponse<GetHomefeedCategoryResponseData>;

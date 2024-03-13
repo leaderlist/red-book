@@ -32,7 +32,7 @@ export const handleCookie = <T extends BaseResponse<any>>(
       const [key, value] = cookieStr.split('=');
       cookieMap[key] = value;
     });
-    console.log(cookieMap);
+    console.log(cookieMap, 'cookieMap');
   }
 
   return result;

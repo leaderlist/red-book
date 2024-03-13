@@ -16,7 +16,7 @@ fetch.interceptors.response.use(
     return response;
   },
   (err) => {
-    console.log(err, 'fetch error');
+    console.log(err.message, 'fetch error');
     return err;
   },
 );

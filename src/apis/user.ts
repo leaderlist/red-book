@@ -35,3 +35,7 @@ export const loginCode = (data: LoginCodeRequest) => {
 export const getUserInfo = () => {
   return fetch.get<GetUserInfoResponse>('/api/sns/web/v2/user/me');
 };
+
+export const getOtherInfo = (params: any) => {
+  return fetch.get<any>('/api/sns/web/v1/user/otherinfo', { params });
+};

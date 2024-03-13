@@ -6,14 +6,19 @@ import { useNavigation } from '@react-navigation/native';
 import { Status, checkUserInfo } from 'src/stores/userSlice';
 import store from 'src/stores';
 import { useAppSelector } from 'src/stores/hooks';
+import { getUserInfo } from 'src/apis/user';
 
 export const Welcome = () => {
   const navigate = useNavigation();
   const status = useAppSelector((state) => state.user.status);
   useEffect(() => {
     // fetch useInfo and check login status
-    store.dispatch(checkUserInfo());
+    // store.dispatch(checkUserInfo());
     console.log('welcome did mount');
+
+    getUserInfo()
+      .then((res) => store.dispatch(checkUserInfo(res.data)))
+      .catch(() => store.dispatch(checkUserInfo({})));
 
     const backHandle = BackHandler.addEventListener('hardwareBackPress', () => {
       return true;
@@ -22,10 +27,10 @@ export const Welcome = () => {
     return () => {
       backHandle.remove();
     };
-  }, [navigate]);
+  }, []);
 
   useEffect(() => {
-    console.log(status);
+    console.log(status, 11111);
     if (status === Status.Success) {
       navigate.replace('Home');
     } else if (status === Status.Failed) {

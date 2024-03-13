@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Animated, Dimensions } from 'react-native';
+import { View, TouchableOpacity, Animated, Dimensions } from 'react-native';
 import { MaterialTopTabBarProps, createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import style from './style';
 import { Find } from '../components/Find';

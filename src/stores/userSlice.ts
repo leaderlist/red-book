@@ -23,8 +23,13 @@ const initialState: { userInfo: GetUserInfoResponse; status: Status } = {
   status: Status.Loading,
 };
 
-export const checkUserInfo = createAsyncThunk('user/checkUserInfo', async () => {
+export const checkUserInfo = createAsyncThunk('user/checkUserInfo', async (userInfo: Partial<GetUserInfoResponse>) => {
   const res = await getStorage<GetUserInfoResponse>(USER_INFO_STORAGE_KEY);
+  console.log(res, userInfo, 'res userInfo')
+  if (!res || !res.user_id || !userInfo.user_id || res.user_id !== userInfo.user_id) {
+    console.log('User info changed');
+    throw new Error('User info changed');
+  }
   return res;
 });
 
