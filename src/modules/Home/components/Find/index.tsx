@@ -18,9 +18,9 @@ interface RenderItem {
 const Tab = createMaterialTopTabNavigator();
 const getMyBar = (categories: CategoryItem[], ref: React.LegacyRef<FlatList<RenderItem>>) => {
   return function MyTabBar({ state, descriptors, navigation, position }: MaterialTopTabBarProps) {
-    const renderItem: ListRenderItem<RenderItem> = ({item, index}) => {
+    const renderItem: ListRenderItem<RenderItem> = ({ item, index }) => {
       const label = item.title;
-      const route = state.routes.find(item => item.name === label);
+      const route = state.routes.find((i) => i.name === label);
       if (!route) return null;
       const isFocused = state.index === index;
       const { options } = descriptors[route.key];
@@ -54,9 +54,7 @@ const getMyBar = (categories: CategoryItem[], ref: React.LegacyRef<FlatList<Rend
           style={style.tabBarButton}
           activeOpacity={1}
           key={`${route.name}-${index}`}>
-          <Animated.Text style={[{ opacity }, style.buttonText, isFocused && style.activeText]}>
-            {label}
-          </Animated.Text>
+          <Animated.Text style={[{ opacity }, style.buttonText, isFocused && style.activeText]}>{label}</Animated.Text>
         </TouchableOpacity>
       );
     }
@@ -64,7 +62,7 @@ const getMyBar = (categories: CategoryItem[], ref: React.LegacyRef<FlatList<Rend
       <View style={style.barWrapper}>
         <FlatList
           ref={ref}
-          data={categories.map(({ id, name }) => ({id, title: name}))}
+          data={categories.map(({ id, name }) => ({ id, title: name }))}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           horizontal
@@ -74,25 +72,27 @@ const getMyBar = (categories: CategoryItem[], ref: React.LegacyRef<FlatList<Rend
     );
   };
 };
-
+// todo, 嵌套的top bar 斜向滑动时，会触发外层top bar滑动
 export const Find = () => {
   const [categoryList, setCategoryList] = useState<CategoryItem[]>([]);
   const { changeActiveRoute } = useHomeScreenActions();
-  const activeRoute = useAppSelector(state => state.homeScreen.activeRoute);
+  const activeRoute = useAppSelector((state) => state.homeScreen.activeRoute);
   const flatListRef = useRef<FlatList<RenderItem>>(null);
 
   useEffect(() => {
     getHomeFeedCategory()
       .then((res) => {
-        setCategoryList(res.data.categories);
-        changeActiveRoute(res.data.categories[0].name);
+        const { categories } = res.data;
+        setCategoryList(categories);
+        changeActiveRoute(categories[0].name);
       })
       .catch((err) => console.log(err));
   }, []);
 
   useEffect(() => {
+    const index = categoryList.findIndex((item) => item.name === activeRoute);
     flatListRef.current?.scrollToIndex({
-      index: categoryList.findIndex((item) => item.name === activeRoute),
+      index,
       viewPosition: 0.5,
       animated: true,
     });
@@ -102,15 +102,11 @@ export const Find = () => {
     return (
       <Tab.Navigator tabBar={getMyBar(categoryList, flatListRef)}>
         {categoryList.map(({ name, id }) => (
-          <Tab.Screen name={name} key={id} component={CategoryPage} />
+          <Tab.Screen initialParams={{ category: id }} name={name} key={id} component={CategoryPage} />
         ))}
       </Tab.Navigator>
     );
   };
 
-  return (
-    <View style={style.root}>
-      {categoryList.length ? renderNavigator() : <Loading />}
-    </View>
-  );
+  return <View style={style.root}>{categoryList.length ? renderNavigator() : <Loading />}</View>;
 };

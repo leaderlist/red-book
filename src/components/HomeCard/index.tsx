@@ -1,23 +1,24 @@
 import { View, Text, Image } from 'react-native';
 import style from './style';
+import { HomeFeedItem } from 'src/types/home';
 
-interface Props {
-  imgUrl: string;
-  title: string;
-  avatar: string;
-  likeCount: string;
-}
-
-export const HomeCard = (props: Props) => {
-  const { imgUrl } = props;
+export const HomeCard = (props: HomeFeedItem) => {
+  const {
+    note_card: { interact_info, user, cover, display_title },
+  } = props;
   return (
     <View style={style.card}>
-      <Image source={{ uri: imgUrl }} />
+      <Image source={{ uri: cover.url_pre }} />
       <View style={style.content}>
-        <Text numberOfLines={2}>{props.title}</Text>
+        <Text numberOfLines={2}>{display_title}</Text>
         <View style={style.footer}>
-          <Image source={{ uri: props.avatar }} />
-          <Text>{props.likeCount}</Text>
+          <View>
+            <Image source={{ uri: user.avatar }} />
+            <Text>{user.nickname}</Text>
+          </View>
+          <View>
+            <Text>{interact_info.liked_count}</Text>
+          </View>
         </View>
       </View>
     </View>

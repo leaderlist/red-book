@@ -19,8 +19,6 @@ function MyTabBar({ state, descriptors, navigation, position }: MaterialTopTabBa
         {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];
           const label = tabLabelMap[route.name];
-          console.log(tabLabelMap[route.name], label, route.name);
-
           const isFocused = state.index === index;
 
           const onPress = () => {

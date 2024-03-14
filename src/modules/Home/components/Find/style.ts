@@ -42,4 +42,7 @@ export default StyleSheet.create({
     color: '#000', // 设置你想要的激活文本颜色
     fontWeight: 'bold',
   },
+  cardList: {
+    paddingHorizontal: 6,
+  },
 });

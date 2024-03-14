@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   card: {
-    width: '100%',
+    width: '45%',
     backgroundColor: '#fff',
     borderRadius: 4,
   },
@@ -13,5 +13,5 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  }
+  },
 });

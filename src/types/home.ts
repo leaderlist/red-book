@@ -57,3 +57,64 @@ export enum ImageFilter {
 export interface GetHomefeedCategoryResponse {
   categories: CategoryItem[];
 }
+
+export enum ModelType {
+  Note = 'note',
+}
+
+export enum CardType {
+  Video = 'video',
+  Normal = 'normal',
+}
+
+export interface HomeFeedItem {
+  id: string;
+  ignore: boolean;
+  model_type: ModelType;
+  note_card: NoteCardItem;
+  track_id: string;
+}
+
+export enum ImageScene {
+  WB_PRV = 'WB_PRV',
+  WB_DFT = 'WB_DFT',
+}
+
+interface InfoItem {
+  image_scene: ImageScene;
+  url: string;
+}
+
+interface Cover {
+  file_id: string;
+  height: number;
+  width: number;
+  url: string;
+  url_pre: string;
+  url_default: string;
+  info_list: InfoItem[];
+}
+
+export interface NoteCardItem {
+  cover: Cover;
+  display_title: string;
+  type: CardType;
+  interact_info: {
+    liked: boolean;
+    liked_count: string;
+  };
+  user: {
+    nick_name: string;
+    avatar: string;
+    nickname: string;
+    user_id: string;
+  };
+  video?: {
+    capa: { duration: number };
+  };
+}
+
+export interface GetHomeFeedResponse {
+  cursor_score: string;
+  items: HomeFeedItem[];
+}

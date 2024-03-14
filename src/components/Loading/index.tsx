@@ -29,9 +29,9 @@ const textSizeMap = {
   [Size.Middle]: 20,
   [Size.Small]: 16,
 };
-
+// todo，做可以传递children的 loading
 export const Loading = (props: Props) => {
-  const { showText = false, text = '加载中...', size = Size.Middle, chidldren, loading = false } = props;
+  const { showText = false, text = '加载中...', size = Size.Middle } = props;
   const animationValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {

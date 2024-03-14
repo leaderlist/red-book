@@ -7,7 +7,7 @@ export const homeScreenSlice = createSlice({
     activeRoute: '',
   },
   reducers: {
-    changeActiveRoute: (state, action) => {
+    changeActiveRoute: (state, action: { payload: string }) => {
       state.activeRoute = action.payload;
     },
   },

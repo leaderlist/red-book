@@ -11,4 +11,4 @@ export interface ProtocolItem {
 }
 
 export type NavigationProps = NativeStackNavigationProp<ParamListBase, string, undefined>;
-export type RouteProps = RouteProp<ParamListBase, string>;
+export type RouteProps = RouteProp<any, string>;
