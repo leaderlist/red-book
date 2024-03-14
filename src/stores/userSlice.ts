@@ -49,6 +49,7 @@ export const userSlice = createSlice({
       })
       .addCase(checkUserInfo.fulfilled, (state, action) => {
         if (action.payload && action.payload.user_id) {
+          console.log('check success');
           state.status = Status.Success;
           state.userInfo = action.payload;
         } else {

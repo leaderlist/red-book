@@ -120,7 +120,7 @@ export default class MyFetch {
     console.log(url, init);
     try {
       const response = await fetch(url, init).then((res: any) => {
-        console.log(res);
+        console.log(res, 22222);
         if (res.status !== 200 && res.status !== 201) {
           return Promise.reject(res.statusText);
         }

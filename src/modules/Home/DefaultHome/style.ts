@@ -34,6 +34,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: '#2e2e2e',
+    fontSize: 16,
   },
   activeText: {
     color: '#000', // 设置你想要的激活文本颜色

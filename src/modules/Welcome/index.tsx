@@ -1,15 +1,17 @@
 import { BackHandler, Image, View } from 'react-native';
-import style from './style';
-import icon_main_logo from '../../assets/icon_main_logo.png';
 import { useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
+// import { useNavigation } from '@react-navigation/native';
 import { Status, checkUserInfo } from 'src/stores/userSlice';
 import store from 'src/stores';
 import { useAppSelector } from 'src/stores/hooks';
 import { getUserInfo } from 'src/apis/user';
+import { NavigationProps } from 'src/types';
+import icon_main_logo from '../../assets/icon_main_logo.png';
 
-export const Welcome = () => {
-  const navigate = useNavigation();
+import style from './style';
+
+export const Welcome = ({ navigation }: { navigation: NavigationProps }) => {
+  // const navigate = useNavigation();
   const status = useAppSelector((state) => state.user.status);
   useEffect(() => {
     // fetch useInfo and check login status
@@ -32,11 +34,11 @@ export const Welcome = () => {
   useEffect(() => {
     console.log(status, 11111);
     if (status === Status.Success) {
-      navigate.replace('Home');
+      navigation.replace('Home');
     } else if (status === Status.Failed) {
-      navigate.replace('Login');
+      navigation.replace('Login');
     }
-  }, [navigate, status]);
+  }, [status]);
 
   return (
     <View style={style.root}>

@@ -1,4 +1,4 @@
-import { View, Text, Animated } from 'react-native';
+import { View, Text, Animated, Easing } from 'react-native';
 import style from './style';
 import { getSvg } from 'src/svg/getSvg';
 import { loadingSvg } from 'src/svg';
@@ -19,9 +19,9 @@ interface Props {
 }
 
 const sizeMap = {
-  [Size.Large]: '64',
-  [Size.Middle]: '48',
-  [Size.Small]: '32',
+  [Size.Large]: '48',
+  [Size.Middle]: '32',
+  [Size.Small]: '24',
 };
 
 const textSizeMap = {
@@ -39,6 +39,7 @@ export const Loading = (props: Props) => {
       Animated.timing(animationValue, {
         toValue: 360,
         duration: 1000,
+        easing: Easing.linear,
         useNativeDriver: true,
       }),
     ).start();

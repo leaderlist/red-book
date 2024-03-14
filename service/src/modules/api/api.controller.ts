@@ -80,6 +80,7 @@ export class ApiController {
 
   @Get('v2/user/me')
   async getUserInfo(@Req() req: Request) {
+    console.log(req.url, 'getUserInfo');
     return this.apiService.getUserInfo(req.url);
   }
 

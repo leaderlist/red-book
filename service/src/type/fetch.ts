@@ -156,8 +156,13 @@ export interface LoginPasswordResponseData {
   user_id: string;
 }
 
-export interface GetHomefeedCategoryResponseData {
-  categories: string[];
+export interface CategoryItem {
+  id: string;
+  name: string;
+}
+
+export interface GetHomeFeedCategoryData {
+  categories: CategoryItem[];
 }
 
 export type ActivateResponse = BaseResponse<ActivateData>;
@@ -168,4 +173,4 @@ export type GetUserInfoResponse = BaseResponse<GetUserInfoResponseData>;
 export type GetHomeFeedResponse = BaseResponse<GetHomeFeedResponseData>;
 export type LoginPasswordResponse = BaseResponse<LoginPasswordResponseData>;
 export type OtherInfoResponse = BaseResponse<OtherInfoResponseData>;
-export type HomeFeedCategoryResponse = BaseResponse<GetHomefeedCategoryResponseData>;
+export type HomeFeedCategoryResponse = BaseResponse<GetHomeFeedCategoryData>;

@@ -1,4 +1,4 @@
-import { ParamListBase } from '@react-navigation/native';
+import { ParamListBase, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 export interface TestData {
@@ -11,3 +11,4 @@ export interface ProtocolItem {
 }
 
 export type NavigationProps = NativeStackNavigationProp<ParamListBase, string, undefined>;
+export type RouteProps = RouteProp<ParamListBase, string>;
