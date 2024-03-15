@@ -10,39 +10,41 @@ import { getHomeFeedParams } from 'src/utils';
 import style from './style';
 
 export const CategoryPage = ({ route, navigation }: { route: RouteProps; navigation: NavigationProps }) => {
-  const activeRoute = useAppSelector((state) => state.homeScreen.activeRoute);
-  const { changeActiveRoute } = useHomeScreenActions();
+  const homeScreen = useAppSelector((state) => state.homeScreen);
+  const { changeActiveRoute, changeNodeIndex } = useHomeScreenActions();
   const [feedList, setFeedList] = useState<HomeFeedItem[]>([]); // Replace 'any' with the actual type of your feed list
   const [cursorScore, setCursorScore] = useState('');
 
   const fetchHomeFeed = useCallback(
-    (refresh_type = RefreshType.Drop) => {
+    (refresh_type = RefreshType.Drop, isChange = false) => {
       getHomeFeed(
         getHomeFeedParams({
           category: route.params?.category,
           cursor_score: cursorScore,
-          note_index: feedList.length,
+          note_index: homeScreen.noteIndex || 21,
           refresh_type,
         }),
       ).then((res) => {
         setFeedList((prevList) => [...prevList, ...res.data.items]);
+        const nodeIndex = feedList.length + res.data.items.length;
+        changeNodeIndex(isChange ? nodeIndex : res.data.items.length);
         setCursorScore(res.data.cursor_score);
         console.log(JSON.stringify(res.data.items));
       });
     },
-    [feedList, route.params?.category, cursorScore],
+    [feedList, route.params?.category, cursorScore, homeScreen],
   );
 
   useEffect(() => {
     console.log('did mount', route.name);
     if (navigation.isFocused()) {
-      fetchHomeFeed();
+      fetchHomeFeed(RefreshType.Change);
     }
 
     const unsubscribe = navigation.addListener('focus', () => {
-      if (route.name !== activeRoute) {
+      if (route.name !== homeScreen.activeRoute) {
         changeActiveRoute(route.name);
-        fetchHomeFeed();
+        fetchHomeFeed(RefreshType.Change);
       }
     });
 

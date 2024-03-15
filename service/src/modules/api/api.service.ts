@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Response } from 'express';
 import {
   BASE_URL,
   defaultCookieFailedRes,
@@ -26,15 +25,16 @@ import {
   OtherInfoResponse,
   HomeFeedCategoryResponse,
 } from 'src/type/fetch';
-import { formatHeader, handleCookie, cookieMap } from 'src/utils';
+import { formatHeader, handleCookie, cookieMap, formatCookies } from 'src/utils';
+import { Request, Response } from 'express';
 
 const modulePrefix = '/api/sns/web';
 
 @Injectable()
 export class ApiService {
-  async getActivate(url: string, response: Response) {
+  async getActivate(request: Request, response: Response) {
     console.time('start handle fetch');
-    const xHeaderData = await getEncryptData(url, {});
+    const xHeaderData = await getEncryptData(request.url, {});
     let responseData: ActiveRes = { ...defaultRes };
     if (xHeaderData) {
       if (!xHeaderData.cookie) {
@@ -60,15 +60,14 @@ export class ApiService {
     return responseData;
   }
 
-  async sendCode(url: string, params: SendCodeRequest, response: Response) {
-    const encryptData = await getEncryptData(url);
+  async sendCode(request: Request, params: SendCodeRequest, response: Response) {
+    const encryptData = await getEncryptData(request.url);
     let resData: SendCodeResponse = defaultRes;
-    const webSession = `web_session=${cookieMap['web_session']};`;
     if (encryptData && encryptData.cookie) {
       const result = await getFetch<SendCodeRequest, SendCodeResponse>(
         `${BASE_URL}${modulePrefix}/v2/login/send_code`,
         params,
-        { headers: formatHeader(encryptData, webSession) },
+        { headers: formatHeader(encryptData, formatCookies(request.cookies)) },
       );
       resData = handleCookie(result, response);
     } else {
@@ -79,15 +78,14 @@ export class ApiService {
     return resData;
   }
 
-  async checkCode(url: string, params: CheckCodeRequest, response: Response) {
-    const encryptData = await getEncryptData(url);
+  async checkCode(request: Request, params: CheckCodeRequest, response: Response) {
+    const encryptData = await getEncryptData(request.url);
     let resData: CheckCodeResponse = defaultRes;
     if (encryptData && encryptData.cookie) {
-      const webSession = `web_session=${cookieMap['web_session']};`;
       const result = await getFetch<CheckCodeRequest, CheckCodeResponse>(
         `${BASE_URL}${modulePrefix}/v1/login/check_code`,
         params,
-        { headers: formatHeader(encryptData, webSession) },
+        { headers: formatHeader(encryptData, formatCookies(request.cookies)) },
       );
       resData = handleCookie(result, response);
       console.log(resData, 'check code');
@@ -99,15 +97,14 @@ export class ApiService {
     return resData;
   }
 
-  async loginCode(url: string, data: LoginCodeRequest, response: Response) {
-    const encryptData = await getEncryptData(url, data);
+  async loginCode(request: Request, data: LoginCodeRequest, response: Response) {
+    const encryptData = await getEncryptData(request.url, data);
     let resData: LoginCodeResponse = defaultRes;
     if (encryptData && encryptData.cookie) {
-      const webSession = `web_session=${cookieMap['web_session']};`;
       const result = await postFetch<LoginCodeRequest, LoginCodeResponse>(
         `${BASE_URL}${modulePrefix}/v2/login/code`,
         data,
-        { headers: { ...formatHeader(encryptData, webSession) } },
+        { headers: { ...formatHeader(encryptData, formatCookies(request.cookies)) } },
       );
       resData = handleCookie(result, response);
       console.log(resData, 'loginCode');
@@ -120,18 +117,17 @@ export class ApiService {
   }
 
   async getOtherInfo(
-    url: string,
+    request: Request,
     params: OtherInfoRequest,
     response: Response,
   ) {
-    const encryptData = await getEncryptData(url);
+    const encryptData = await getEncryptData(request.url);
     let responseData: OtherInfoResponse = defaultRes;
     if (encryptData?.cookie) {
-      const webSession = `web_session=${cookieMap['web_session']};`;
       const result = await postFetch<OtherInfoRequest, OtherInfoResponse>(
         `${BASE_URL}${modulePrefix}/v2/user/info`,
         params,
-        { headers: { ...formatHeader(encryptData, webSession) } },
+        { headers: { ...formatHeader(encryptData, formatCookies(request.cookies)) } },
       );
       responseData = handleCookie(result, response);
       console.log(responseData, 'getOtherInfo');
@@ -144,11 +140,11 @@ export class ApiService {
   }
 
   async loginPassword(
-    url: string,
+    request: Request,
     data: LoginPasswordRequest,
     response: Response,
   ) {
-    const encryptData = await getEncryptData(url, data);
+    const encryptData = await getEncryptData(request.url, data);
     let resData: LoginPasswordResponse = defaultRes;
     if (encryptData && encryptData.cookie) {
       const webSession = `web_session=${cookieMap['web_session']};`;
@@ -156,7 +152,7 @@ export class ApiService {
         LoginPasswordRequest,
         LoginPasswordResponse
       >(`${BASE_URL}${modulePrefix}/v2/login/password`, data, {
-        headers: { ...formatHeader(encryptData, webSession) },
+        headers: { ...formatHeader(encryptData, formatCookies(request.cookies)) },
       });
       resData = handleCookie(result, response);
     } else {
@@ -167,22 +163,19 @@ export class ApiService {
     return resData;
   }
 
-  async getUserInfo(url: string) {
-    const encryptData = await getEncryptData(url);
+  async getUserInfo(request: Request) {
+    const encryptData = await getEncryptData(request.url);
     let responseData: GetUserInfoResponse = defaultRes;
     if (encryptData && encryptData.cookie) {
-      const webSession = `web_session=${cookieMap['web_session']};`;
-      console.log('webSession', webSession, 'encryptData', encryptData);
       const result = await getFetch<undefined, GetUserInfoResponse>(
         `${BASE_URL}${modulePrefix}/v2/user/me`,
         undefined,
         {
           headers: {
-            ...formatHeader(encryptData, webSession),
+            ...formatHeader(encryptData, formatCookies(request.cookies)),
           },
         },
       );
-      console.log(result, '/v2/user/me');
       responseData = result;
     } else {
       responseData = encryptData.cookie
@@ -193,22 +186,22 @@ export class ApiService {
     return responseData;
   }
 
-  async getHomeFeed(url: string, data: GetHomeFeedRequest, response: Response) {
-    const encryptData = await getEncryptData(url, data);
+  async getHomeFeed(request: Request, data: GetHomeFeedRequest, response: Response) {
+    const encryptData = await getEncryptData(request.url, data);
     let responseData: GetHomeFeedResponse = defaultRes;
     if (encryptData && encryptData.cookie) {
-      const webSession = `web_session=${cookieMap['web_session']};`;
+      console.log(data, 'cookies home feed', formatHeader(encryptData, formatCookies(request.cookies)));
       const result = await postFetch<GetHomeFeedRequest, GetHomeFeedResponse>(
         `${BASE_URL}${modulePrefix}/v1/homefeed`,
         data,
         {
           headers: {
-            ...formatHeader(encryptData, webSession),
+            ...formatHeader(encryptData, formatCookies(request.cookies)),
             'Content-Type': 'application/json; charset=UTF-8',
           },
         },
       );
-      console.log(result);
+      console.log(result, 'get home feed')
       responseData = handleCookie(result, response);
     } else {
       responseData = encryptData.cookie
@@ -219,19 +212,17 @@ export class ApiService {
     return responseData;
   }
 
-  async getHomefeedCategory(url: string, response: Response) {
-    const encryptData = await getEncryptData(url);
+  async getHomefeedCategory(request: Request, response: Response) {
+    const encryptData = await getEncryptData(request.url);
     let responseData: HomeFeedCategoryResponse = defaultRes;
     if (encryptData && encryptData.cookie) {
-      const webSession = `web_session=${cookieMap['web_session']};`;
       const result = await getFetch<unknown, HomeFeedCategoryResponse>(
         `${BASE_URL}${modulePrefix}/v1/homefeed/category`,
         undefined,
         {
-          headers: { ...formatHeader(encryptData, webSession) },
+          headers: { ...formatHeader(encryptData, formatCookies(request.cookies)) },
         },
       );
-      console.log(result);
       responseData = handleCookie(result, response);
     } else {
       responseData = encryptData.cookie

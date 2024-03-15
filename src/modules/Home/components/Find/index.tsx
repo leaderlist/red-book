@@ -15,6 +15,8 @@ interface RenderItem {
   title: string;
 }
 
+const DefaultCategory = { name: '推荐', id: Category.RECOMMEND };
+
 const Tab = createMaterialTopTabNavigator();
 const getMyBar = (categories: CategoryItem[], ref: React.LegacyRef<FlatList<RenderItem>>) => {
   return function MyTabBar({ state, descriptors, navigation, position }: MaterialTopTabBarProps) {
@@ -62,6 +64,11 @@ const getMyBar = (categories: CategoryItem[], ref: React.LegacyRef<FlatList<Rend
       <View style={style.barWrapper}>
         <FlatList
           ref={ref}
+          getItemLayout={(data, index) => ({
+            length: 80,
+            offset: 80 * index,
+            index,
+          })}
           data={categories.map(({ id, name }) => ({ id, title: name }))}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
@@ -83,7 +90,7 @@ export const Find = () => {
     getHomeFeedCategory()
       .then((res) => {
         const { categories } = res.data;
-        setCategoryList(categories);
+        setCategoryList([DefaultCategory, ...categories]);
         changeActiveRoute(categories[0].name);
       })
       .catch((err) => console.log(err));

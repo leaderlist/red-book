@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleCookie = exports.formatHeader = exports.cookieMap = void 0;
+exports.formatCookies = exports.handleCookie = exports.formatHeader = exports.cookieMap = void 0;
 exports.cookieMap = {};
 const formatHeader = (xHeaderData, activeCookie) => {
     return {
@@ -28,4 +28,10 @@ const handleCookie = (result, response) => {
     return result;
 };
 exports.handleCookie = handleCookie;
+function formatCookies(cookies) {
+    return Object.entries(cookies).reduce((prev, current) => {
+        return prev + current[0] + '=' + current[1] + ';';
+    }, '');
+}
+exports.formatCookies = formatCookies;
 //# sourceMappingURL=index.js.map

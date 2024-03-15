@@ -25,7 +25,7 @@ export class ApiController {
     @Res({ passthrough: true }) res: Response,
   ) {
     console.log(phone, zone, type);
-    return this.apiService.sendCode(req.url, { phone, zone, type }, res);
+    return this.apiService.sendCode(req, { phone, zone, type }, res);
   }
 
   @Post('v1/login/activate')
@@ -33,7 +33,7 @@ export class ApiController {
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
   ) {
-    return this.apiService.getActivate(req.url, res);
+    return this.apiService.getActivate(req, res);
   }
 
   @Get('v1/login/check_code')
@@ -44,7 +44,7 @@ export class ApiController {
     @Query('code') code: number,
     @Res({ passthrough: true }) res: Response,
   ) {
-    return this.apiService.checkCode(req.url, { phone, zone, code }, res);
+    return this.apiService.checkCode(req, { phone, zone, code }, res);
   }
 
   @Get('v1/user/otherinfo')
@@ -54,7 +54,7 @@ export class ApiController {
     @Query('user_id') user_id: string,
   ) {
     console.log(user_id, 'getOtherInfo');
-    return this.apiService.getOtherInfo(req.url, { user_id }, res);
+    return this.apiService.getOtherInfo(req, { user_id }, res);
   }
 
   @Post('v2/login/code')
@@ -65,7 +65,7 @@ export class ApiController {
   ) {
     const { mobile_token, phone, zone } = reqBody;
     const data = { mobile_token, phone, zone };
-    return this.apiService.loginCode(req.url, data, res);
+    return this.apiService.loginCode(req, data, res);
   }
 
   @Post('v2/login/password')
@@ -75,13 +75,13 @@ export class ApiController {
   ) {
     const { phone, zone, password } = req.body;
     const data = { phone, zone, password };
-    return this.apiService.loginPassword(req.url, data, res);
+    return this.apiService.loginPassword(req, data, res);
   }
 
   @Get('v2/user/me')
   async getUserInfo(@Req() req: Request) {
     console.log(req.url, 'getUserInfo');
-    return this.apiService.getUserInfo(req.url);
+    return this.apiService.getUserInfo(req);
   }
 
   @Post('v1/homefeed')
@@ -90,7 +90,8 @@ export class ApiController {
     @Body() body: GetHomeFeedRequest,
     @Res({ passthrough: true }) res: Response,
   ) {
-    return this.apiService.getHomeFeed(req.url, body, res);
+    console.log(req.cookies)
+    return this.apiService.getHomeFeed(req, body, res);
   }
 
   @Get('v1/homefeed/category')
@@ -98,6 +99,6 @@ export class ApiController {
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
   ) {
-    return this.apiService.getHomefeedCategory(req.url, res);
+    return this.apiService.getHomefeedCategory(req, res);
   }
 }

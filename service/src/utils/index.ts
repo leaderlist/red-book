@@ -37,3 +37,9 @@ export const handleCookie = <T extends BaseResponse<any>>(
 
   return result;
 };
+
+export function formatCookies(cookies: Record<string, string>) {
+  return Object.entries(cookies).reduce((prev, current) => {
+    return prev + current[0] + '=' + current[1] + ';';
+  }, '');
+}

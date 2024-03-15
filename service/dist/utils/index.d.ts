@@ -9,3 +9,4 @@ export declare const formatHeader: (xHeaderData: XHeaderData, activeCookie?: str
     cookie: string;
 };
 export declare const handleCookie: <T extends BaseResponse<any>>(result: T, response: Response) => T;
+export declare function formatCookies(cookies: Record<string, string>): string;

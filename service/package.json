@@ -26,6 +26,7 @@
     "@types/jsdom": "^21.1.6",
     "axios": "^1.6.7",
     "canvas": "^2.11.2",
+    "cookie-parser": "^1.4.6",
     "dom-storage": "^2.1.0",
     "jsdom": "16.4.0",
     "jsdon": "^0.2.3",
