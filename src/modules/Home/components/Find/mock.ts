@@ -1,3 +1,5 @@
+import { HomeFeedItem } from 'src/types/home';
+
 export const mockData = [
   {
     id: '65e9894a0000000001028a92',
@@ -809,4 +811,4 @@ export const mockData = [
     track_id: '2cz02yu1v7tfkopljtbhu',
     ignore: false,
   },
-];
+] as HomeFeedItem[];

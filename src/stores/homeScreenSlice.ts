@@ -6,6 +6,7 @@ export const homeScreenSlice = createSlice({
   initialState: {
     activeRoute: '',
     noteIndex: 0,
+    pageWidth: 0,
   },
   reducers: {
     changeActiveRoute: (state, action: { payload: string }) => {
@@ -13,7 +14,10 @@ export const homeScreenSlice = createSlice({
     },
     changeNodeIndex: (state, action: { payload: number }) => {
       state.noteIndex = action.payload;
-    }
+    },
+    changePageWidth: (state, action: { payload: number }) => {
+      state.pageWidth = action.payload;
+    },
   },
 });
 

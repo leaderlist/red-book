@@ -81,6 +81,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
     }
     signingConfigs {
         debug {
@@ -108,6 +109,11 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
     implementation("com.facebook.react:flipper-integration")
+
+    // 如果只需要支持WebP格式而不需要动图
+    implementation 'com.facebook.fresco:webpsupport:2.5.0'
+
+    implementation 'androidx.exifinterface:exifinterface:1.2.0'
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")

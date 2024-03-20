@@ -5,10 +5,10 @@ import { createMaterialTopTabNavigator, MaterialTopTabBarProps } from '@react-na
 import { Loading } from 'src/components/Loading';
 import { CategoryPage } from './CategoryPage';
 import { getHomeFeedCategory } from 'src/apis/home';
-
-import style from './style';
 import { useHomeScreenActions } from 'src/stores/homeScreenSlice';
 import { useAppSelector } from 'src/stores/hooks';
+
+import style from './style';
 
 interface RenderItem {
   id: Category;
@@ -59,7 +59,8 @@ const getMyBar = (categories: CategoryItem[], ref: React.LegacyRef<FlatList<Rend
           <Animated.Text style={[{ opacity }, style.buttonText, isFocused && style.activeText]}>{label}</Animated.Text>
         </TouchableOpacity>
       );
-    }
+    };
+
     return (
       <View style={style.barWrapper}>
         <FlatList
@@ -80,7 +81,7 @@ const getMyBar = (categories: CategoryItem[], ref: React.LegacyRef<FlatList<Rend
   };
 };
 // todo, 嵌套的top bar 斜向滑动时，会触发外层top bar滑动
-export const Find = () => {
+export const Find = (/* { navigation }: { navigation: NavigationProps } */) => {
   const [categoryList, setCategoryList] = useState<CategoryItem[]>([]);
   const { changeActiveRoute } = useHomeScreenActions();
   const activeRoute = useAppSelector((state) => state.homeScreen.activeRoute);
@@ -91,7 +92,8 @@ export const Find = () => {
       .then((res) => {
         const { categories } = res.data;
         setCategoryList([DefaultCategory, ...categories]);
-        changeActiveRoute(categories[0].name);
+        changeActiveRoute(DefaultCategory.name);
+        flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
       })
       .catch((err) => console.log(err));
   }, []);
@@ -100,7 +102,7 @@ export const Find = () => {
     const index = categoryList.findIndex((item) => item.name === activeRoute);
     flatListRef.current?.scrollToIndex({
       index,
-      viewPosition: 0.5,
+      viewPosition: index === 0 ? 0 : index === categoryList.length - 1 ? 1 : 0.5,
       animated: true,
     });
   }, [activeRoute]);

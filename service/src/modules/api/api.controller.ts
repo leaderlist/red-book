@@ -90,7 +90,6 @@ export class ApiController {
     @Body() body: GetHomeFeedRequest,
     @Res({ passthrough: true }) res: Response,
   ) {
-    console.log(req.cookies)
     return this.apiService.getHomeFeed(req, body, res);
   }
 

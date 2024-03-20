@@ -12,8 +12,8 @@ export function isNumber(number: any) {
   return typeof number === 'number' && !Number.isNaN(number) && !!number;
 }
 
-const columns = 4;
-const renderNotes = 18;
+const columns = 5;
+const renderNotes = 20;
 
 export function getHomeFeedParams({
   category,

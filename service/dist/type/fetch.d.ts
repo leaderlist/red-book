@@ -96,7 +96,17 @@ export interface GetHomeFeedResponseData {
     items: HomeFeedItem[];
 }
 export declare enum Category {
-    Recommend = "homefeed_recommend"
+    RECOMMEND = "homefeed_recommend",
+    FASHION = "homefeed.fashion_v3",
+    FOOD = "homefeed.food_v3",
+    COSMETICS = "homefeed.cosmetics_v3",
+    MOVIE = "homefeed.movie_and_tv_v3",
+    CAREER = "homefeed.career_v3",
+    EMOTION = "homefeed.love_v3",
+    HOUSE = "homefeed.household_product_v3",
+    GAME = "homefeed.gaming_v3",
+    TRAVEL = "homefeed.travel_v3",
+    FITNESS = "homefeed.fitness_v3"
 }
 export declare enum RefreshType {
     Change = 1,

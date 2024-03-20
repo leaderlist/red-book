@@ -44,8 +44,8 @@ export interface CategoryItem {
 }
 
 export enum RefreshType {
-  Change = 1,
-  Drop = 3,
+  Drop = 1,
+  Change = 3,
 }
 
 export enum ImageFilter {

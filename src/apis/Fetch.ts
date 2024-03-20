@@ -117,17 +117,14 @@ export default class MyFetch {
         'Content-Type': 'application/json;charset=utf-8',
       };
     }
-    console.log(url, init);
     try {
       const response = await fetch(url, init).then((res: any) => {
-        console.log(res, 22222);
         if (res.status !== 200 && res.status !== 201) {
           return Promise.reject(res.statusText);
         }
 
         if (res.headers.map['set-cookie']) {
           const cookies = res.headers.map['set-cookie'] as string;
-          console.log(cookies, 'set cookies');
           const result: Record<string, string> = {};
           cookies.split(';').forEach((item) => {
             if (!item) return;
@@ -139,10 +136,7 @@ export default class MyFetch {
         return res.json();
       });
 
-      console.log(response.data, typeof response.data.categories, 'response.data');
-
       if (response.code !== 200 && response.code !== 201 && response.code !== 0) {
-        console.log(response, 'response');
         throw new Error(response.message);
       }
 
@@ -162,7 +156,6 @@ export default class MyFetch {
   get<Response, Request = undefined>(url: string, options?: FetchConfig<Request>): Promise<MyResponse<Response>> {
     const { params, ...reset } = options || ({} as FetchConfig<Request>);
     const realUrl = params ? `${url}?${QS.stringify(params)}` : url;
-    console.log(realUrl, params);
     return this.fetch<Request, Response>(realUrl, 'GET', undefined, reset);
   }
 

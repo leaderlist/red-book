@@ -2,6 +2,7 @@ import CookieManager from '@react-native-cookies/cookies';
 import { BASE_URL, DEFAULT_DOMAIN } from 'src/constants';
 
 export const setCookies = (cookies: Record<string, string>, url = BASE_URL) => {
+  console.log(cookies, 'set cookies')
   Object.entries(cookies).forEach((item) => {
     console.log(item, 'item', DEFAULT_DOMAIN);
     CookieManager.set(url, {

@@ -1,4 +1,4 @@
-export function getXHeader(url: any, param: any): Promise<{
+export function getXHeader(url: any, cookie: any, param: any): Promise<{
     'X-s-common': any;
     cookie: string;
     append(name: string, value: string): void;

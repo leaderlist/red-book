@@ -8,3 +8,4 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
 # Add any project specific keep options here:
+-dontnote com.facebook.react.modules.network.ProxyConfig
